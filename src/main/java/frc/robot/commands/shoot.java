@@ -39,7 +39,7 @@ public class shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    leftStick = -1 * Robot.oi.xbox0.getRawAxis(4);
+    leftStick = -1 * Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_R_XAXIS);
 		// rightStick = Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_R_XAXIS);
 
 		// if(Math.abs(leftStick) < .07)
@@ -52,7 +52,7 @@ public class shoot extends CommandBase {
     // }
     
     Robot.shooter.run(leftStick);
-    SmartDashboard.putNumber("Axis Number", leftStick);
+    SmartDashboard.putNumber("rawAxis", leftStick);
   }
 
   // Called once the command ends or is interrupted.
