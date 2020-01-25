@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -14,30 +15,49 @@ import frc.robot.commands.shoot;
 
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class Shootersubsystem extends SubsystemBase {
   private static Constants consts = new Constants();
-  public static TalonFX shooter = new TalonFX(consts.driveRightRearMotor);
-  private double percentspeed;
-  /**
-   * Creates a new ExampleSubsystem.
-   */
+  //public static TalonFX shooter = new TalonFX(consts.shooter1);
+  //public static TalonFX shooter2 = new TalonFX(consts.shooter2);
+  public static VictorSP shooter = new VictorSP(consts.shooter1);
+  public static PowerDistributionPanel pdp = new PowerDistributionPanel();  
+  private static int CurrentCounter = 0;
 
   public void initDefaultCommand() {
-    setDefaultCommand(new shoot());
   }
 
   public Shootersubsystem() {
   }
   public void run(double speed)
   {
-    //double speed = ((rpm / 60) * (2 * Math.PI)) * 2.375;
-    shooter.set(ControlMode.PercentOutput,speed);
+    if(speed <= 0.05)
+    {
+      speed = 0;
+    }
+    
+    if(pdp.getCurrent(3) < 30)
+    {
+      shooter.set(speed);
+      CurrentCounter = 0;
+    }else{if(CurrentCounter > 10)
+      {
+        shooter.set(0);
+      }  
+    }
+    //shooter.set(ControlMode.PercentOutput,speed);
+    //shooter2.set(ControlMode.PercentOutput,speed);
+    shooter.set(speed);
+    
   }
 
   public void norun()
   {
-    shooter.set(ControlMode.Velocity,0);
+    //shooter.set(ControlMode.Velocity,0);
+    shooter.set(0);
   }
 
   @Override
@@ -47,6 +67,7 @@ public class Shootersubsystem extends SubsystemBase {
 
   public void getStuff()
   {
-    SmartDashboard.putNumber("Velocity: ", shooter.getSelectedSensorVelocity()/2048/0.1 * 60);
+    //SmartDashboard.putNumber("Velocity: ", shooter.getSelectedSensorVelocity()/2048/0.1 * 60);
+
   }
 }

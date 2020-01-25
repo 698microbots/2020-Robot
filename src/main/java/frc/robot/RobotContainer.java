@@ -52,10 +52,10 @@ public class RobotContainer {
    */
   
   private void configureButtonBindings() {
-    // driverButtonA.whenPressed(new shoot(0.5));
+    driverButtonA.whenPressed(new shoot());
     // driverButtonB.whenPressed(new shoot(1.0));
     // driverButtonY.whenPressed(new shoot(0.2));
-    // driverButtonX.whenPressed(new Turnoff());
+    driverButtonX.whenPressed(new Turnoff());
   }
 
 
