@@ -53,7 +53,7 @@ public class Vision extends SubsystemBase {
         isCamera = state >= 0;
 
         // run getBlocks with arguments to have the camera
-        wof.getCCC().getBlocks(false, 255, 255);
+        int stuff = wof.getCCC().getBlocks(false, 255, 255);
 
         // get blocks
         blocks = wof.getCCC().getBlocks();
@@ -64,6 +64,8 @@ public class Vision extends SubsystemBase {
             double xCoord = blocks.get(0).getX();
             double yCoord = blocks.get(0).getY();
 
+            double signature = blocks.get(0).getSignature();
+
             // String containing target info
             String data = blocks.get(0).toString();
 
@@ -71,11 +73,17 @@ public class Vision extends SubsystemBase {
             SmartDashboard.putBoolean("Present: ", true);
             SmartDashboard.putNumber("X Coordinate: ", xCoord);
             SmartDashboard.putNumber("Y Coordinate: ", yCoord);
+            SmartDashboard.putNumber("Signature: ", signature);
             SmartDashboard.putString("Data: ", data);
         }
         else
         {
+            for (int i = 0; i < 2; i++)
+            {
+                SmartDashboard.putNumber("Counter: ", i);
+            }
             SmartDashboard.putBoolean("Present: ", false);
+            SmartDashboard.putNumber("Stuff: ", stuff);
             // Check to see how many targets are present
             SmartDashboard.putNumber("Size: ", blocks.size());
         }

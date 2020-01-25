@@ -40,18 +40,13 @@ public class shoot extends CommandBase {
   @Override
   public void execute() {
     leftStick = -1 * Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_R_XAXIS);
-		// rightStick = Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_R_XAXIS);
 
 		// if(Math.abs(leftStick) < .07)
 		// {
 		// 	leftStick = 0;
 		// }
-		// if(Math.abs(rightStick) < .07)
-		// {
-		// 	rightStick = 0;
-    // }
     
-    Robot.shooter.run(1);
+    Robot.shooter.run(0.25);
     SmartDashboard.putNumber("rawAxis", leftStick);
   }
 

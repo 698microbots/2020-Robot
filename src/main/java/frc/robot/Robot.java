@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
 
   public static Shootersubsystem shooter = new Shootersubsystem();
   public static RobotContainer oi = new RobotContainer(); 
-  //public static PowerDistributionPanel pdp = new PowerDistributionPanel();  
+  public static PowerDistributionPanel pdp = new PowerDistributionPanel();  
   public static Vision vision = new Vision();
 
   /**
@@ -107,11 +107,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-      shooter.getStuff();
-      shooter.run(-1*oi.xbox0.getRawAxis(4));
+    shooter.getStuff();
+    shooter.run(-1*oi.xbox0.getRawAxis(4)*0.60);
     SmartDashboard.putNumber("Axis", oi.xbox0.getRawAxis(4));
-    //SmartDashboard.putNumber("current",pdp.getCurrent(3));
-    vision.testVision();
+    SmartDashboard.putNumber("current",pdp.getCurrent(3));
+    // while(true)
+    // {
+    //   vision.testVision();
+    // }
   }
 
   @Override

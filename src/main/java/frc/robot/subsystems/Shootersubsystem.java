@@ -24,6 +24,7 @@ public class Shootersubsystem extends SubsystemBase {
   //public static TalonFX shooter = new TalonFX(consts.shooter1);
   //public static TalonFX shooter2 = new TalonFX(consts.shooter2);
   public static VictorSP shooter = new VictorSP(consts.shooter1);
+  public static VictorSP shooter1 = new VictorSP(consts.shooter2);
   public static PowerDistributionPanel pdp = new PowerDistributionPanel();  
   private static int CurrentCounter = 0;
 
@@ -39,25 +40,36 @@ public class Shootersubsystem extends SubsystemBase {
       speed = 0;
     }
     
-    if(pdp.getCurrent(3) < 30)
+    if(pdp.getCurrent(3) < 60)
     {
-      shooter.set(speed);
-      CurrentCounter = 0;
-    }else{if(CurrentCounter > 10)
+      if(CurrentCounter > 0) CurrentCounter--;
+      if(CurrentCounter == 0){
+        shooter.set(speed);
+        shooter1.set(speed);
+      }
+      SmartDashboard.putBoolean("Stop: ", false);
+    }else{
+      CurrentCounter++;
+      if(CurrentCounter > 10)
       {
-        shooter.set(0);
+        CurrentCounter = 100;
+        SmartDashboard.putBoolean("Stop: ", true);
+        shooter.set(0.0);
+        shooter1.set(0.0);
       }  
     }
+    SmartDashboard.putNumber("Current Counter: ", CurrentCounter);
     //shooter.set(ControlMode.PercentOutput,speed);
     //shooter2.set(ControlMode.PercentOutput,speed);
-    shooter.set(speed);
-    
+    // shooter.set(speed);
+    // shooter1.set(speed);
   }
 
   public void norun()
   {
     //shooter.set(ControlMode.Velocity,0);
     shooter.set(0);
+    shooter1.set(0);
   }
 
   @Override
