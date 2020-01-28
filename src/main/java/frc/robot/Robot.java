@@ -108,13 +108,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     shooter.getStuff();
-    shooter.run(-1*oi.xbox0.getRawAxis(4)*0.60);
+    //shooter.run(-1*oi.xbox0.getRawAxis(4)*0.50);
     SmartDashboard.putNumber("Axis", oi.xbox0.getRawAxis(4));
     SmartDashboard.putNumber("current",pdp.getCurrent(3));
-    // while(true)
-    // {
-    //   vision.testVision();
-    // }
+    vision.readColor();
   }
 
   @Override

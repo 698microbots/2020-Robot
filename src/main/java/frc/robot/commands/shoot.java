@@ -46,7 +46,7 @@ public class shoot extends CommandBase {
 		// 	leftStick = 0;
 		// }
     
-    Robot.shooter.run(0.25);
+    Robot.shooter.run(0.45);
     SmartDashboard.putNumber("rawAxis", leftStick);
   }
 

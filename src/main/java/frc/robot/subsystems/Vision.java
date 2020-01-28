@@ -28,6 +28,9 @@ public class Vision extends SubsystemBase {
     // Store PixyCam Info
     ArrayList <Block> blocks;
 
+    // Array Color
+    final String[] colors = {"", "Blue", "Green", "Red", "Yellow"}; 
+
     // Existence of camera
     private boolean isCamera = false;
 
@@ -35,7 +38,7 @@ public class Vision extends SubsystemBase {
     }
 
     public Vision() {
-        wof = Pixy2.createInstance(LinkType.I2C);
+        wof = Pixy2.createInstance(LinkType.SPI);
         state = -1;
     }
 
@@ -44,16 +47,18 @@ public class Vision extends SubsystemBase {
         // This method will be called once per scheduler run
     }
 
-    public void testVision()
+    public void readColor()
     {
         if(!isCamera){
             // Initialize PixyCam if no camera present
-            state = wof.init(1);
+            state = wof.init(0);
         }
         isCamera = state >= 0;
 
         // run getBlocks with arguments to have the camera
-        int stuff = wof.getCCC().getBlocks(false, 255, 255);
+        // 15 represents reading 4 signatures
+        // 255 represents read max number of blocks 
+        wof.getCCC().getBlocks(false, 15, 255);
 
         // get blocks
         blocks = wof.getCCC().getBlocks();
@@ -64,7 +69,7 @@ public class Vision extends SubsystemBase {
             double xCoord = blocks.get(0).getX();
             double yCoord = blocks.get(0).getY();
 
-            double signature = blocks.get(0).getSignature();
+            int signature = blocks.get(0).getSignature();
 
             // String containing target info
             String data = blocks.get(0).toString();
@@ -73,17 +78,12 @@ public class Vision extends SubsystemBase {
             SmartDashboard.putBoolean("Present: ", true);
             SmartDashboard.putNumber("X Coordinate: ", xCoord);
             SmartDashboard.putNumber("Y Coordinate: ", yCoord);
-            SmartDashboard.putNumber("Signature: ", signature);
+            SmartDashboard.putString("Color: ", colors[signature]);
             SmartDashboard.putString("Data: ", data);
         }
         else
         {
-            for (int i = 0; i < 2; i++)
-            {
-                SmartDashboard.putNumber("Counter: ", i);
-            }
             SmartDashboard.putBoolean("Present: ", false);
-            SmartDashboard.putNumber("Stuff: ", stuff);
             // Check to see how many targets are present
             SmartDashboard.putNumber("Size: ", blocks.size());
         }
