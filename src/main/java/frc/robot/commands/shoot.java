@@ -22,8 +22,6 @@ public class shoot extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   //int speed = (int)SmartDashboard.getNumber("speed", 0);
-
-  private double speed;
   public shoot() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements( Robot.shooter);
@@ -41,12 +39,13 @@ public class shoot extends CommandBase {
   public void execute() {
     leftStick = -1 * Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_R_XAXIS);
 
-		// if(Math.abs(leftStick) < .07)
-		// {
-		// 	leftStick = 0;
-		// }
+	   if(Math.abs(leftStick) < .07)
+	     {
+       	leftStick = 0;
+      }
     
-    Robot.shooter.run(0.45);
+    
+    Robot.shooter.run(.65);
     SmartDashboard.putNumber("rawAxis", leftStick);
   }
 

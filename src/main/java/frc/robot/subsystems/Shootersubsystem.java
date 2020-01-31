@@ -16,6 +16,7 @@ import frc.robot.commands.shoot;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
@@ -23,8 +24,12 @@ public class Shootersubsystem extends SubsystemBase {
   private static Constants consts = new Constants();
   //public static TalonFX shooter = new TalonFX(consts.shooter1);
   //public static TalonFX shooter2 = new TalonFX(consts.shooter2);
-  public static VictorSP shooter = new VictorSP(consts.shooter1);
+  //public static VictorSP shooter = new VictorSP(consts.shooter1);
   public static VictorSP shooter1 = new VictorSP(consts.shooter2);
+  public static TalonSRX shooter = new TalonSRX(5);
+  
+  
+  
   public static PowerDistributionPanel pdp = new PowerDistributionPanel();  
   private static int CurrentCounter = 0;
 
@@ -32,43 +37,45 @@ public class Shootersubsystem extends SubsystemBase {
   }
 
   public Shootersubsystem() {
+    shooter.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
   public void run(double speed)
   {
-    if(speed <= 0.05)
-    {
-      speed = 0;
-    }
+    // if(speed <= 0.05)
+    // {
+    //   speed = 0;
+    // }
     
-    if(pdp.getCurrent(3) < 60)
-    {
-      if(CurrentCounter > 0) CurrentCounter--;
-      if(CurrentCounter == 0){
-        shooter.set(speed);
-        shooter1.set(speed);
-      }
-      SmartDashboard.putBoolean("Stop: ", false);
-    }else{
-      CurrentCounter++;
-      if(CurrentCounter > 10)
-      {
-        CurrentCounter = 100;
-        SmartDashboard.putBoolean("Stop: ", true);
-        shooter.set(0.0);
-        shooter1.set(0.0);
-      }  
-    }
-    SmartDashboard.putNumber("Current Counter: ", CurrentCounter);
-    //shooter.set(ControlMode.PercentOutput,speed);
+    // if(pdp.getCurrent(3) < 60)
+    // {
+    //   if(CurrentCounter > 0) CurrentCounter--;
+    //   if(CurrentCounter == 0){
+    //     shooter.set(ControlMode.PercentOutput, speed);
+    //     //shooter1.set(speed);
+    //   }
+    //   SmartDashboard.putBoolean("Stop: ", false);
+    // }else{
+    //   CurrentCounter++;
+    //   if(CurrentCounter > 10)
+    //   {
+    //     CurrentCounter = 100;
+    //     SmartDashboard.putBoolean("Stop: ", true);
+    //     shooter.set(ControlMode.PercentOutput, 0.0);
+    //     //shooter1.set(0.0);
+    //   }  
+    // }
+    // SmartDashboard.putNumber("encoder: ", shooter.getSelectedSensorVelocity(0));
+    // SmartDashboard.putNumber("Current Counter: ", CurrentCounter);
+    shooter.set(ControlMode.PercentOutput,speed);
     //shooter2.set(ControlMode.PercentOutput,speed);
-    // shooter.set(speed);
-    // shooter1.set(speed);
+     //shooter.set(speed);
+     shooter1.set(speed);
   }
 
   public void norun()
   {
     //shooter.set(ControlMode.Velocity,0);
-    shooter.set(0);
+    shooter.set(ControlMode.PercentOutput , 0.0);
     shooter1.set(0);
   }
 
@@ -79,7 +86,7 @@ public class Shootersubsystem extends SubsystemBase {
 
   public void getStuff()
   {
-    //SmartDashboard.putNumber("Velocity: ", shooter.getSelectedSensorVelocity()/2048/0.1 * 60);
+    SmartDashboard.putNumber("Velocity: ", shooter.getSelectedSensorVelocity(0)* 600 / 4096);
 
   }
 }
