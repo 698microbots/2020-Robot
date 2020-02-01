@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.shoot;
 
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -20,23 +19,24 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
-public class Shootersubsystem extends SubsystemBase {
+public class Shooter extends SubsystemBase {
   private static Constants consts = new Constants();
+  public static TalonFX shooter = new TalonFX(6);
   //public static TalonFX shooter = new TalonFX(consts.shooter1);
   //public static TalonFX shooter2 = new TalonFX(consts.shooter2);
   //public static VictorSP shooter = new VictorSP(consts.shooter1);
-  public static VictorSP shooter1 = new VictorSP(consts.shooter2);
-  public static TalonSRX shooter = new TalonSRX(5);
+  //public static VictorSP shooter1 = new VictorSP(consts.shooter2);
+  //public static TalonSRX shooter = new TalonSRX(5);
   
   
   
   public static PowerDistributionPanel pdp = new PowerDistributionPanel();  
-  private static int CurrentCounter = 0;
+  //private static int CurrentCounter = 0;
 
   public void initDefaultCommand() {
   }
 
-  public Shootersubsystem() {
+  public Shooter() {
     shooter.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
   public void run(double speed)
@@ -69,14 +69,14 @@ public class Shootersubsystem extends SubsystemBase {
     shooter.set(ControlMode.PercentOutput,speed);
     //shooter2.set(ControlMode.PercentOutput,speed);
      //shooter.set(speed);
-     shooter1.set(speed);
+     //shooter1.set(speed);
   }
 
   public void norun()
   {
     //shooter.set(ControlMode.Velocity,0);
     shooter.set(ControlMode.PercentOutput , 0.0);
-    shooter1.set(0);
+    //shooter1.set(0);
   }
 
   @Override

@@ -13,8 +13,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.Shootersubsystem;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.Drive;
+import frc.robot.commands.Drive.auto;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -24,13 +26,15 @@ import frc.robot.subsystems.Vision;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  // private auto auto = new auto();
 
   private RobotContainer m_robotContainer;
 
-  public static Shootersubsystem shooter = new Shootersubsystem();
+  public static Shooter shooter = new Shooter();
   public static RobotContainer oi = new RobotContainer(); 
   public static PowerDistributionPanel pdp = new PowerDistributionPanel();  
   public static Vision vision = new Vision();
+  public static Drive drive = new Drive();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -79,7 +83,7 @@ public class Robot extends TimedRobot {
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+      // auto.schedule();
     }
   }
 
@@ -88,6 +92,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+
   }
 
   @Override
@@ -112,6 +117,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Axis", oi.xbox0.getRawAxis(4));
     SmartDashboard.putNumber("current",pdp.getCurrent(3));
     vision.readColor();
+    vision.countBalls();
   }
 
   @Override

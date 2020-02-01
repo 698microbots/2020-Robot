@@ -5,23 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Drive;
 
 import frc.robot.Robot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+//import edu.wpi.first.wpilibj.GenericHID.Hand;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class Turnoff extends CommandBase {
+public class JoyStickDrive extends CommandBase {
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public Turnoff() {
+  //int speed = (int)SmartDashboard.getNumber("speed", 0);
+  public JoyStickDrive() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements( Robot.shooter);
+    // addRequirements(Robot.drive);
   }
 
   // Called when the command is initially scheduled.
@@ -29,10 +33,28 @@ public class Turnoff extends CommandBase {
   public void initialize() {
   }
 
+  double leftStick;
+  double rightStick;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.shooter.norun();
+    // leftStick = -1* Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_L_YAXIS);
+		// rightStick = Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_R_XAXIS);
+
+		// if(Math.abs(leftStick) < .07)
+		// {
+		// 	leftStick = 0;
+		// }
+		// if(Math.abs(rightStick) < .07)
+		// {
+		// 	rightStick = 0;
+		// }
+		
+    // SmartDashboard.putNumber("stick", leftStick - rightStick);
+		// Robot.drive.setLeftSpeed((leftStick + rightStick));
+    // Robot.drive.setRightSpeed((leftStick - rightStick));
+    
+    Robot.drive.setRightSpeed(0.1);
   }
 
   // Called once the command ends or is interrupted.

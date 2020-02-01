@@ -5,24 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Shooter;
 
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class shoot extends CommandBase {
+public class Turnoff extends CommandBase {
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  //int speed = (int)SmartDashboard.getNumber("speed", 0);
-  public shoot() {
+  public Turnoff() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements( Robot.shooter);
   }
@@ -32,21 +29,10 @@ public class shoot extends CommandBase {
   public void initialize() {
   }
 
-  double leftStick;
-  double rightStick;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    leftStick = -1 * Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_R_XAXIS);
-
-	   if(Math.abs(leftStick) < .07)
-	     {
-       	leftStick = 0;
-      }
-    
-    
-    Robot.shooter.run(.65);
-    SmartDashboard.putNumber("rawAxis", leftStick);
+    Robot.shooter.norun();
   }
 
   // Called once the command ends or is interrupted.

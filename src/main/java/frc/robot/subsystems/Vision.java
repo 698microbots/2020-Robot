@@ -9,42 +9,53 @@ package frc.robot.subsystems;
 
 import java.util.ArrayList;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.shoot;
+import frc.robot.commands.Shooter.shoot;
 import io.github.pseudoresonance.pixy2api.Pixy2;
-import io.github.pseudoresonance.pixy2api.Pixy2CCC;
 import io.github.pseudoresonance.pixy2api.Pixy2.LinkType;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 
 public class Vision extends SubsystemBase {
+
+    // PixyCam
     // Create instance for PixyCam
     private Pixy2 wof;
-    
-    //Check PixyCam state
+    // Check PixyCam state
     private int state;
-
     // Store PixyCam Info
     ArrayList <Block> blocks;
-
     // Array Color
     final String[] colors = {"", "Blue", "Green", "Red", "Yellow"}; 
-
     // Existence of camera
-    private boolean isCamera = false;
+    private boolean isCamera;
+
+    // Photoelectric Sensor
+    private DigitalInput photoe;
 
     public void initDefaultCommand() {
     }
 
     public Vision() {
+        // PixyCam var initialize
+        isCamera = false;
         wof = Pixy2.createInstance(LinkType.SPI);
         state = -1;
+
+        // Photoelectric var initialize
+        photoe = new DigitalInput(0);
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+    }
+
+    public void countBalls()
+    {
+        SmartDashboard.putBoolean("Photoe", photoe.get());
     }
 
     public void readColor()

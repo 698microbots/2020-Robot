@@ -11,7 +11,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.*;
+import frc.robot.commands.Shooter.*;
+import frc.robot.commands.Drive.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -22,7 +23,7 @@ import frc.robot.commands.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final shoot m_autoCommand = new shoot();
+  private final auto m_autoCommand = new auto();
 
   public XboxController	xbox0 	= new XboxController(0);
   public int XBOX_R_XAXIS = 4;
@@ -51,7 +52,7 @@ public class RobotContainer {
    */
   
   private void configureButtonBindings() {
-    //driverButtonA.toggleWhenPressed(new shoot());
+    driverButtonA.whenPressed(new JoyStickDrive());
     driverButtonB.whenPressed(new shoot());
     driverButtonX.whenPressed(new Turnoff());
   }
