@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Drive;
+import frc.robot.commands.Drive.JoyStickDrive;
 import frc.robot.commands.Drive.auto;
 
 /**
@@ -26,13 +27,12 @@ import frc.robot.commands.Drive.auto;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  // private auto auto = new auto();
+  public static RobotContainer oi;
 
-  private RobotContainer m_robotContainer;
+  public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
+  // Create instances of subsystems
   public static Shooter shooter = new Shooter();
-  public static RobotContainer oi = new RobotContainer(); 
-  public static PowerDistributionPanel pdp = new PowerDistributionPanel();  
   public static Vision vision = new Vision();
   public static Drive drive = new Drive();
 
@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    oi = new RobotContainer();
   }
 
   /**
@@ -79,7 +79,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = oi.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -105,6 +105,8 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
+    // Set Default Commands for subsystems
+    drive.setDefaultCommand(new JoyStickDrive());
   }
 
   /**
@@ -112,12 +114,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    shooter.getStuff();
+    //shooter.getStuff();
     //shooter.run(-1*oi.xbox0.getRawAxis(4)*0.50);
-    SmartDashboard.putNumber("Axis", oi.xbox0.getRawAxis(4));
-    SmartDashboard.putNumber("current",pdp.getCurrent(3));
-    vision.readColor();
-    vision.countBalls();
+    //SmartDashboard.putNumber("Axis", oi.xbox0.getRawAxis(1));
+    //SmartDashboard.putNumber("current",pdp.getCurrent(3));
+    
+    //vision.readColor();
+    //vision.countBalls();
+    drive.getDriveValues();
   }
 
   @Override

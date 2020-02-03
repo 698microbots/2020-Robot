@@ -23,4 +23,5 @@ public final class Constants {
     public int 	BackRight = 4;
     public int BackLeft = 5;
     public int Turret = 6;
+    public int intake = 7;
 }

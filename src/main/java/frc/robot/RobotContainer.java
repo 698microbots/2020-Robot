@@ -52,7 +52,6 @@ public class RobotContainer {
    */
   
   private void configureButtonBindings() {
-    driverButtonA.whenPressed(new JoyStickDrive());
     driverButtonB.whenPressed(new shoot());
     driverButtonX.whenPressed(new Turnoff());
   }

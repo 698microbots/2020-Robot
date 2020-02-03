@@ -21,7 +21,8 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class Shooter extends SubsystemBase {
   private static Constants consts = new Constants();
-  public static TalonFX shooter = new TalonFX(6);
+  // change Falcon ID
+  //public static TalonFX shooter = new TalonFX(0);
   //public static TalonFX shooter = new TalonFX(consts.shooter1);
   //public static TalonFX shooter2 = new TalonFX(consts.shooter2);
   //public static VictorSP shooter = new VictorSP(consts.shooter1);
@@ -37,7 +38,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public Shooter() {
-    shooter.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    //shooter.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
   public void run(double speed)
   {
@@ -66,7 +67,7 @@ public class Shooter extends SubsystemBase {
     // }
     // SmartDashboard.putNumber("encoder: ", shooter.getSelectedSensorVelocity(0));
     // SmartDashboard.putNumber("Current Counter: ", CurrentCounter);
-    shooter.set(ControlMode.PercentOutput,speed);
+    //shooter.set(ControlMode.PercentOutput,speed);
     //shooter2.set(ControlMode.PercentOutput,speed);
      //shooter.set(speed);
      //shooter1.set(speed);
@@ -75,7 +76,7 @@ public class Shooter extends SubsystemBase {
   public void norun()
   {
     //shooter.set(ControlMode.Velocity,0);
-    shooter.set(ControlMode.PercentOutput , 0.0);
+    //shooter.set(ControlMode.PercentOutput , 0.0);
     //shooter1.set(0);
   }
 
@@ -86,7 +87,7 @@ public class Shooter extends SubsystemBase {
 
   public void getStuff()
   {
-    SmartDashboard.putNumber("Velocity: ", shooter.getSelectedSensorVelocity(0)* 600 / 4096);
+    //SmartDashboard.putNumber("Velocity: ", shooter.getSelectedSensorVelocity(0)* 600 / 4096);
 
   }
 }
