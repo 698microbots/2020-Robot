@@ -18,10 +18,10 @@ package frc.robot;
 public final class Constants {
     public int 	shooter1 = 0;
     public int shooter2 = 1;
-    public int 	FrontRight = 2;
+    public int 	FrontRight = 4;
     public int FrontLeft = 3;
-    public int 	BackRight = 4;
-    public int BackLeft = 5;
+    public int 	BackRight = 5;
+    public int BackLeft = 2;
     public int Turret = 6;
     public int intake = 7;
 }

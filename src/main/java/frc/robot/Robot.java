@@ -17,7 +17,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Drive;
 import frc.robot.commands.Drive.JoyStickDrive;
-import frc.robot.commands.Drive.auto;
+import frc.robot.commands.Drive.AutoCommandGroup;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to

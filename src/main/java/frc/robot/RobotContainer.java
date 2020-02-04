@@ -23,7 +23,7 @@ import frc.robot.commands.Drive.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final auto m_autoCommand = new auto();
+  private final AutoCommandGroup m_autoCommand = new AutoCommandGroup();
 
   public XboxController	xbox0 	= new XboxController(0);
   public int XBOX_R_XAXIS = 4;

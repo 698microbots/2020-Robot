@@ -9,7 +9,6 @@ package frc.robot.commands.Shooter;
 
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-//import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -17,14 +16,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class shoot extends CommandBase {
   /**
-   * Creates a new ExampleCommand.
+   * Create Shoot Command
    *
    * @param subsystem The subsystem used by this command.
    */
-  //int speed = (int)SmartDashboard.getNumber("speed", 0);
   public shoot() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements( Robot.shooter);
+    addRequirements(Robot.shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -39,14 +37,13 @@ public class shoot extends CommandBase {
   public void execute() {
     leftStick = -1 * Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_R_XAXIS);
 
-	   if(Math.abs(leftStick) < .07)
+	   if(Math.abs(leftStick) < .1)
 	     {
        	leftStick = 0;
       }
     
     
     Robot.shooter.run(.65);
-    SmartDashboard.putNumber("rawAxis", leftStick);
   }
 
   // Called once the command ends or is interrupted.

@@ -35,6 +35,7 @@ public class Drive extends SubsystemBase {
 
   // Set Right Speeds on Drive Train
   public void setRightSpeed(double speed) {
+    speed = -speed;
 		if(speed<-1) speed =-1;
 		if(speed>1) speed=1;
     BackRight.set(TalonFXControlMode.PercentOutput,speed);

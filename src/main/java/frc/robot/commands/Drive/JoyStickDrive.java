@@ -37,11 +37,11 @@ public class JoyStickDrive extends CommandBase {
 	  rightStick = Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_R_XAXIS);
 
     // Deadband
-		if(Math.abs(leftStick) < .1)
+		if(Math.abs(leftStick) < .12)
 		{
 		 	leftStick = 0;
 		}
-		if(Math.abs(rightStick) < .1)
+		if(Math.abs(rightStick) < .12)
 		{
 		 	rightStick = 0;
     }

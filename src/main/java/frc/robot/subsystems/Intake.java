@@ -7,17 +7,20 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
+
   /**
-   * Creates a new Intake.
+   * Creates Intake Subsystem.
    */
   private static Constants consts = new Constants();
   public static TalonFX intake = new TalonFX(consts.intake);
+
   public Intake() {
 
   }
@@ -25,5 +28,15 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void retrieveBall(double speed)
+  {
+    intake.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void outtakeBall(double speed)
+  {
+    intake.set(ControlMode.PercentOutput, speed);
   }
 }
