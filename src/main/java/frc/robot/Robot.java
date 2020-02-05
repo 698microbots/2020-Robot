@@ -7,17 +7,27 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+//import subsystems
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Intake;
+
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+//import commands to be deafault
 import frc.robot.commands.Drive.JoyStickDrive;
-import frc.robot.commands.Drive.AutoCommandGroup;
+import frc.robot.commands.Intake.PickUp;
+import frc.robot.commands.Turret.TurretJoyStick;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -35,7 +45,14 @@ public class Robot extends TimedRobot {
   public static Shooter shooter = new Shooter();
   public static Vision vision = new Vision();
   public static Drive drive = new Drive();
+  public static Turret turret = new Turret();
+  public static Intake intake = new Intake();
 
+  //Create lime light
+  //public static NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
+
+  //variable for fms
+    String gameData;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -107,6 +124,8 @@ public class Robot extends TimedRobot {
 
     // Set Default Commands for subsystems
     drive.setDefaultCommand(new JoyStickDrive());
+    //turret.setDefaultCommand(new TurretJoyStick());
+    intake.setDefaultCommand(new PickUp());
   }
 
   /**
@@ -121,7 +140,33 @@ public class Robot extends TimedRobot {
     
     //vision.readColor();
     //vision.countBalls();
-    drive.getDriveValues();
+    //drive.getDriveValues();
+    //vision.GetDistance();
+    turret.GetPosistion();
+
+      gameData = DriverStation.getInstance().getGameSpecificMessage();
+      if(gameData.length() > 0)
+      {
+        switch(gameData.charAt(0))
+        {
+            case 'B' :
+            //blue code
+            SmartDashboard.putString("wheel color", "Blue");
+            break;
+            case 'R' :
+            //red code
+            SmartDashboard.putString("wheel color", "Red");
+            break;
+            case 'Y' :
+            //yellow code
+            SmartDashboard.putString("wheel color", "Yellow");
+            break;
+            case 'G' :
+            //green code
+            SmartDashboard.putString("wheel color", "Green");
+            break;
+        }
+      }
   }
 
   @Override
