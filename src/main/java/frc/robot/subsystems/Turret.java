@@ -42,7 +42,7 @@ public class Turret extends SubsystemBase {
       Turret.set(TalonFXControlMode.PercentOutput , speed);
     }
   }
-  public void GetPosistion()
+  public void GetPosition()
   {
     SmartDashboard.putNumber("position", Turret.getSelectedSensorPosition(0) );
   }

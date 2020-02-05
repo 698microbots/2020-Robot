@@ -24,7 +24,8 @@ import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-//import commands to be deafault
+import frc.robot.commands.Drive.AutoDrive;
+//import commands to be default
 import frc.robot.commands.Drive.JoyStickDrive;
 import frc.robot.commands.Intake.PickUp;
 import frc.robot.commands.Turret.TurretJoyStick;
@@ -37,6 +38,7 @@ import frc.robot.commands.Turret.TurretJoyStick;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private AutoDrive autoDrive = new AutoDrive();
   public static RobotContainer oi;
 
   public static PowerDistributionPanel pdp = new PowerDistributionPanel();
@@ -98,6 +100,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = oi.getAutonomousCommand();
 
+    SmartDashboard.putBoolean("Autonomous: ", true);
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       // auto.schedule();
@@ -109,7 +112,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-
+    autoDrive.execute();
+    drive.getDriveValues();
   }
 
   @Override
@@ -142,7 +146,7 @@ public class Robot extends TimedRobot {
     //vision.countBalls();
     //drive.getDriveValues();
     //vision.GetDistance();
-    turret.GetPosistion();
+    turret.GetPosition();
 
       gameData = DriverStation.getInstance().getGameSpecificMessage();
       if(gameData.length() > 0)

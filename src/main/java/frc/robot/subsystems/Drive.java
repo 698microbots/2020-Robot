@@ -63,4 +63,17 @@ public class Drive extends SubsystemBase {
     SmartDashboard.putNumber("Back Right Speed: ", BackRight.getSelectedSensorVelocity(0)* 600 / 2048);
     SmartDashboard.putNumber("Back Left Speed: ", BackLeft.getSelectedSensorVelocity(0)* 600 / 2048);
   }
+
+  public void resetEncoders()
+  {
+    FrontRight.setSelectedSensorPosition(0);
+    FrontLeft.setSelectedSensorPosition(0);
+    BackRight.setSelectedSensorPosition(0);
+    BackLeft.setSelectedSensorPosition(0);
+  }
+
+  public double getPosition()
+  {
+    return FrontRight.getSelectedSensorPosition(0);
+  }
 }

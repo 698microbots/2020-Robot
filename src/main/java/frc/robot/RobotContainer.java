@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Shooter.*;
@@ -48,6 +49,7 @@ public class RobotContainer {
   public JoystickButton driver1ButtonY = new JoystickButton(xbox1, 4);
   public JoystickButton driver1ButtonB = new JoystickButton(xbox1, 2);
 
+  private double speed = SmartDashboard.getNumber("Set Turret Speed: ", 0.01);
 
   
 
@@ -58,7 +60,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    
   }
 
   /**
@@ -71,7 +72,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     driverButtonB.whenPressed(new shoot());
     driverButtonX.whenPressed(new Turnoff());
-    driver1ButtonB.whenPressed(new TurretJoyStick());
+    driver1ButtonB.whenPressed(new TurretJoyStick(speed));
     driver1ButtonX.whenPressed(new TurretJoyStick1());
     driver1ButtonA.whenPressed(new TurretJoyStick2());
     

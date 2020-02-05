@@ -7,6 +7,8 @@
 
 package frc.robot.commands.Drive;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 //import java.lang.module.ModuleDescriptor.Requires;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -18,7 +20,8 @@ public class AutoDrive extends CommandBase {
    */
   public AutoDrive() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.drive);
+    addRequirements(Robot.drive); 
+    Robot.drive.resetEncoders();
   }
 
   // Called when the command is initially scheduled.
@@ -30,6 +33,16 @@ public class AutoDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double currentPos = Robot.drive.getPosition();
+    while(currentPos > -10000)
+    {
+      SmartDashboard.putNumber("Position: ", currentPos);
+      Robot.drive.setLeftSpeed(0.1);
+      Robot.drive.setRightSpeed(0.1);
+      currentPos = Robot.drive.getPosition();
+    }
+    Robot.drive.setLeftSpeed(0.0);
+    Robot.drive.setRightSpeed(0.0);
   }
 
   // Called once the command ends or is interrupted.

@@ -11,20 +11,22 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
 public class TurretJoyStick extends CommandBase {
+
+  private double speed; 
   /**
    * Creates a new rotateLeft.
    */
-  public TurretJoyStick() {
+  public TurretJoyStick(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.turret);
-
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
   }
-  double speed;
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
@@ -37,7 +39,7 @@ public class TurretJoyStick extends CommandBase {
 		}
     Robot.turret.rotate(speed);
     */
-    Robot.turret.rotate(.06);
+    Robot.turret.rotate(speed);
   }
 
   // Called once the command ends or is interrupted.
