@@ -16,10 +16,10 @@ public class TurretJoyStick extends CommandBase {
   /**
    * Creates a new rotateLeft.
    */
-  public TurretJoyStick(double speed) {
+  public TurretJoyStick() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.turret);
-    this.speed = speed;
+    //this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -30,16 +30,16 @@ public class TurretJoyStick extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /*
-    speed =  Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_L_XAXIS);
+    
+    speed =  Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_L_XAXIS) * .10;
     //dead band
-	  if(Math.abs(speed) < .12)
-		{
-		 	speed = 0;
-		}
+	  //if(Math.abs(speed) < .12)
+		//{
+		 	//speed = 0;
+		//}
     Robot.turret.rotate(speed);
-    */
-    Robot.turret.rotate(speed);
+    
+    //Robot.turret.rotate(speed);
   }
 
   // Called once the command ends or is interrupted.

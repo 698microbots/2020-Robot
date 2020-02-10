@@ -16,12 +16,15 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public int 	shooter1 = 0;
-    public int shooter2 = 1;
+    //can
+    public int 	shooter1 = 1;
+    public int shooter2 = 8;
     public int 	FrontRight = 4;
     public int FrontLeft = 3;
     public int 	BackRight = 5;
     public int BackLeft = 2;
     public int Turret = 7;
     public int intake = 6;
+    //pwm
+    public int indexer = 0; 
 }

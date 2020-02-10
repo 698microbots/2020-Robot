@@ -65,13 +65,16 @@ public class Vision extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
     }
-    /*public void GetDistance()
+    public void GetDistance()
     {
         limeLightAngleToTarget = ts.getDouble(0.0);
         double distance = (targetHieght - limeLightHeight) / Math.tan(limeLightAngle + limeLightAngleToTarget);
         SmartDashboard.putNumber("distance", distance);
     }
-    */
+    public double GetX()
+    {
+        return ta.getDouble(0.0);
+    }
     public void countBalls()
     {
         SmartDashboard.putBoolean("Photoe", photoe.get());

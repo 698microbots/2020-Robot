@@ -33,18 +33,22 @@ public class Turret extends SubsystemBase {
   public void rotate(double speed)
   {
     
-    if((Turret.getSelectedSensorPosition(0) > 100 && speed > 0) || (Turret.getSelectedSensorPosition(0) < -100 && speed < 0) )
-    {
-      Turret.set(TalonFXControlMode.PercentOutput , 0);
-    }
-    else
-    {
-      Turret.set(TalonFXControlMode.PercentOutput , speed);
-    }
+    //if((Turret.getSelectedSensorPosition(0) > 100 && speed > 0) || (Turret.getSelectedSensorPosition(0) < -100 && speed < 0) )
+    //{
+     // Turret.set(TalonFXControlMode.PercentOutput , 0);
+    //}
+    //else
+    //{
+      Turret.set(TalonFXControlMode.PercentOutput , speed );
+    //}
   }
   public void GetPosition()
   {
     SmartDashboard.putNumber("position", Turret.getSelectedSensorPosition(0) );
+  }
+  public void GetSpeed()
+  {
+    SmartDashboard.putNumber("speed", Turret.getSelectedSensorVelocity(0) * 600 / 2048 );
   }
   
   @Override

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Shooter.*;
+import frc.robot.commands.Turret.AutoAim;
 import frc.robot.commands.Turret.TurretJoyStick;
 import frc.robot.commands.Turret.TurretJoyStick1;
 import frc.robot.commands.Turret.TurretJoyStick2;
@@ -29,18 +30,21 @@ public class RobotContainer {
 
   private final AutoCommandGroup m_autoCommand = new AutoCommandGroup();
 
-  //Driver 1
-  public XboxController	xbox0 	= new XboxController(0);
   public int XBOX_R_XAXIS = 4;
 	public int XBOX_R_YAXIS = 5;
 	public int XBOX_L_XAXIS = 0;
   public int XBOX_L_YAXIS = 1;
   public int XBOX_L_Trigger = 2;
   public int XBOX_R_Trigger = 3;
+  //Driver 1
+  public XboxController	xbox0 	= new XboxController(0);
   public JoystickButton driverButtonA = new JoystickButton(xbox0, 1);
   public JoystickButton driverButtonX = new JoystickButton(xbox0, 3);
   public JoystickButton driverButtonY = new JoystickButton(xbox0, 4);
   public JoystickButton driverButtonB = new JoystickButton(xbox0, 2);
+  public JoystickButton driverLBumber = new JoystickButton(xbox0, 5);
+  public JoystickButton driverRBumber = new JoystickButton(xbox0, 6);
+
 
   //Driver 2
   public XboxController	xbox1 	= new XboxController(1);
@@ -70,9 +74,15 @@ public class RobotContainer {
    */
   
   private void configureButtonBindings() {
-    driverButtonB.whenPressed(new shoot());
-    driverButtonX.whenPressed(new Turnoff());
-    driver1ButtonB.whenPressed(new TurretJoyStick(speed));
+    //driver 1
+    driverLBumber.whenPressed(new shoot());
+    driverRBumber.whenPressed(new Turnoff());
+    driverButtonB.whenPressed(new AutoAim());
+    driverButtonA.whenPressed(new index());
+    driverButtonY.whenPressed(new stopIndex());
+
+    // driver 2 
+    //driver1ButtonB.whenPressed(new TurretJoyStick(speed));
     driver1ButtonX.whenPressed(new TurretJoyStick1());
     driver1ButtonA.whenPressed(new TurretJoyStick2());
     

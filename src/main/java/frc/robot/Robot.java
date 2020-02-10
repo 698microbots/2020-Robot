@@ -51,7 +51,7 @@ public class Robot extends TimedRobot {
   public static Intake intake = new Intake();
 
   //Create lime light
-  //public static NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
+  public static NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
   //variable for fms
     String gameData;
@@ -128,7 +128,7 @@ public class Robot extends TimedRobot {
 
     // Set Default Commands for subsystems
     drive.setDefaultCommand(new JoyStickDrive());
-    //turret.setDefaultCommand(new TurretJoyStick());
+    turret.setDefaultCommand(new TurretJoyStick());
     intake.setDefaultCommand(new PickUp());
   }
 
@@ -137,7 +137,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //shooter.getStuff();
+    shooter.getStuff();
     //shooter.run(-1*oi.xbox0.getRawAxis(4)*0.50);
     //SmartDashboard.putNumber("Axis", oi.xbox0.getRawAxis(1));
     //SmartDashboard.putNumber("current",pdp.getCurrent(3));
@@ -145,8 +145,9 @@ public class Robot extends TimedRobot {
     //vision.readColor();
     //vision.countBalls();
     //drive.getDriveValues();
-    //vision.GetDistance();
+    vision.GetDistance();
     turret.GetPosition();
+    turret.GetSpeed();
 
       gameData = DriverStation.getInstance().getGameSpecificMessage();
       if(gameData.length() > 0)
