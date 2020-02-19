@@ -5,38 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Turret;
+package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class TurretJoyStick2 extends CommandBase {
+public class ShooterIdle extends CommandBase {
   /**
-   * Creates a new rotateLeft.
+   * Creates a new Idle.
    */
-  public TurretJoyStick2() {
+  public ShooterIdle() {
+    addRequirements(Robot.shooter);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.turret);
-
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
   }
-  double speed;
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /*
-    speed =  Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_L_XAXIS);
-    //dead band
-	  if(Math.abs(speed) < .12)
-		{
-		 	speed = 0;
-    }
-    */
-    Robot.turret.rotate(0);
+    Robot.shooter.indexstop();
+    Robot.shooter.norun();
   }
 
   // Called once the command ends or is interrupted.

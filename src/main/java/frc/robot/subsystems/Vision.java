@@ -49,13 +49,13 @@ public class Vision extends SubsystemBase {
     public Vision() {
         // PixyCam var initialize
         isCamera = false;
-        wof = Pixy2.createInstance(LinkType.SPI);
+        //wof = Pixy2.createInstance(LinkType.SPI);
         state = -1;
 
         // Photoelectric var initialize
         photoe = new DigitalInput(0);
 
-       // tx = Robot.limelight.getEntry("tx");
+        //tx = Robot.limelight.getEntry("tx");
     	//ty = Robot.limelight.getEntry("ty");
     	//ta = Robot.limelight.getEntry("ta");
     	//tv = Robot.limelight.getEntry("tv");
@@ -67,13 +67,13 @@ public class Vision extends SubsystemBase {
     }
     public void GetDistance()
     {
-        limeLightAngleToTarget = ts.getDouble(0.0);
-        double distance = (targetHieght - limeLightHeight) / Math.tan(limeLightAngle + limeLightAngleToTarget);
-        SmartDashboard.putNumber("distance", distance);
+        //limeLightAngleToTarget = ts.getDouble(0.0);
+        //double distance = (targetHieght - limeLightHeight) / Math.tan(limeLightAngle + limeLightAngleToTarget);
+        //SmartDashboard.putNumber("distance", distance);
     }
     public double GetX()
     {
-        return ta.getDouble(0.0);
+        return Robot.limelight.getEntry("tx").getDouble(0.0);
     }
     public void countBalls()
     {

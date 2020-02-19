@@ -17,8 +17,7 @@ package frc.robot;
  */
 public final class Constants {
     //can
-    public int 	shooter1 = 1;
-    public int shooter2 = 8;
+    public int 	shooter  = 1;
     public int 	FrontRight = 4;
     public int FrontLeft = 3;
     public int 	BackRight = 5;
@@ -27,4 +26,9 @@ public final class Constants {
     public int intake = 6;
     //pwm
     public int indexer = 0; 
+
+    //shooter pid
+    public double shooterkp = 0.1;
+    public double shooterkf = 0.05;
+    public double shooterkI = 0.001;
 }

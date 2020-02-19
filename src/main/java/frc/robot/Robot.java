@@ -21,6 +21,9 @@ import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 
+//import commands
+import frc.robot.commands.Shooter.*;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -28,6 +31,7 @@ import frc.robot.commands.Drive.AutoDrive;
 //import commands to be default
 import frc.robot.commands.Drive.JoyStickDrive;
 import frc.robot.commands.Intake.PickUp;
+import frc.robot.commands.Shooter.Turnoff;
 import frc.robot.commands.Turret.TurretJoyStick;
 
 /**
@@ -64,6 +68,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     oi = new RobotContainer();
+    shooter.setDefaultCommand(new ShooterIdle());
   }
 
   /**
@@ -145,7 +150,7 @@ public class Robot extends TimedRobot {
     //vision.readColor();
     //vision.countBalls();
     //drive.getDriveValues();
-    vision.GetDistance();
+    //vision.GetDistance();
     turret.GetPosition();
     turret.GetSpeed();
 

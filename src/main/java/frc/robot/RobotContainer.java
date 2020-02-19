@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Turret.AutoAim;
 import frc.robot.commands.Turret.TurretJoyStick;
-import frc.robot.commands.Turret.TurretJoyStick1;
-import frc.robot.commands.Turret.TurretJoyStick2;
 import frc.robot.commands.Drive.*;
 
 /**
@@ -75,16 +73,13 @@ public class RobotContainer {
   
   private void configureButtonBindings() {
     //driver 1
-    driverLBumber.whenPressed(new shoot());
+    driverLBumber.whileHeld(new shoot());
     driverRBumber.whenPressed(new Turnoff());
     driverButtonB.whenPressed(new AutoAim());
-    driverButtonA.whenPressed(new index());
-    driverButtonY.whenPressed(new stopIndex());
+    driverButtonA.whileHeld(new index());
 
     // driver 2 
     //driver1ButtonB.whenPressed(new TurretJoyStick(speed));
-    driver1ButtonX.whenPressed(new TurretJoyStick1());
-    driver1ButtonA.whenPressed(new TurretJoyStick2());
     
   }
 

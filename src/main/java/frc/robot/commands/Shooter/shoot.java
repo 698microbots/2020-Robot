@@ -8,6 +8,7 @@
 package frc.robot.commands.Shooter;
 
 import frc.robot.Robot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -29,21 +30,12 @@ public class shoot extends CommandBase {
   @Override
   public void initialize() {
   }
-
-  double leftStick;
-  double rightStick;
+  double speed;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    leftStick = -1 * Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_R_XAXIS);
-
-	   if(Math.abs(leftStick) < .1)
-	     {
-       	leftStick = 0;
-      }
-    
-    
-    Robot.shooter.run(5000);
+    speed = SmartDashboard.getNumber("Setpoint", 500);
+    Robot.shooter.run(speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -54,6 +46,6 @@ public class shoot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
