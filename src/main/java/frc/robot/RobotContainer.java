@@ -73,10 +73,10 @@ public class RobotContainer {
   
   private void configureButtonBindings() {
     //driver 1
-    driverLBumber.whileHeld(new shoot());
+    driverButtonA.whileHeld(new shoot());
     driverRBumber.whenPressed(new Turnoff());
     driverButtonB.whenPressed(new AutoAim());
-    driverButtonA.whileHeld(new index());
+    driverButtonY.whileHeld(new index());
 
     // driver 2 
     //driver1ButtonB.whenPressed(new TurretJoyStick(speed));

@@ -24,11 +24,17 @@ public final class Constants {
     public int BackLeft = 2;
     public int Turret = 7;
     public int intake = 6;
-    //pwm
-    public int indexer = 0; 
+    public int searializer = 8;
+    public int searializer2 = 9;
+    public int indexer = 10;  
 
     //shooter pid
-    public double shooterkp = 0.1;
+    public double shooterkp = 0.05;
     public double shooterkf = 0.05;
     public double shooterkI = 0.001;
+
+    //turret pid
+    public double turretkp = 0.1;
+    public double turretkI = 0.01;
+    public double turretkD = 0;
 }

@@ -35,10 +35,10 @@ public class Shooter extends SubsystemBase {
   public final int kPIDLoopIdx = 0;
   public final int kTimeoutMs = 30;
 
-  public  double kF = consts.shooterkf;
+  public  double kF = SmartDashboard.getNumber("Shoot F : ", 0);
   public  double kD = 0;
-  public  double kI = consts.shooterkI;
-  public  double kP = consts.shooterkp;
+  public  double kI = SmartDashboard.getNumber("Shoot I: ", 0);
+  public  double kP = SmartDashboard.getNumber("Shoot P: ", 0);
 
   public static PowerDistributionPanel pdp = new PowerDistributionPanel();
   //private static int CurrentCounter = 0;
@@ -52,10 +52,10 @@ public class Shooter extends SubsystemBase {
 
     shooter.setSensorPhase(true);
     // SmartDashboard.putNumber("Setpoint", 500);
-    // SmartDashboard.putNumber("P: ", 0);
-    // SmartDashboard.putNumber("I: ", 0);
-    // SmartDashboard.putNumber("D: ", 0);
-    // SmartDashboard.putNumber("F: ", 0);
+    SmartDashboard.putNumber("Shoot P: ", 0);
+    SmartDashboard.putNumber("Shoot I: ", 0);
+    SmartDashboard.putNumber("Shoot D: ", 0);
+    SmartDashboard.putNumber("Shoot F: ", 0);
     SmartDashboard.putString("Notes", "Hey guys, there is like a two to one gear ratio so don't like go sicko mode");
   }
   public void run(final double speed)
@@ -84,12 +84,12 @@ public class Shooter extends SubsystemBase {
     //   }  
     // }
     // SmartDashboard.putNumber("encoder: ", shooter.getSelectedSensorVelocity(0));
-    // SmartDashboard.putNumber("Current Counter: ", CurrentCounter);
-    
-    kI = SmartDashboard.getNumber("I: ", 0);
-    kP = SmartDashboard.getNumber("P: ", 0);
-    kF = SmartDashboard.getNumber("F: ", 0);
-    kD = SmartDashboard.getNumber("D: ", 0);
+    // SmartDashboard.putNumber("Current Counter: ", CurrentCounter); 
+
+    kP = SmartDashboard.getNumber("Shoot P: ", 0);
+    kI = SmartDashboard.getNumber("Shoot I: ", 0);
+    kD = SmartDashboard.getNumber("Shoot D: ", 0);
+    kF = SmartDashboard.getNumber("Shoot F: ", 0);
 
     shooter.configNominalOutputForward(0, kTimeoutMs);
     shooter.configNominalOutputReverse(0, kTimeoutMs);
@@ -129,7 +129,7 @@ public void indexstop()
 
 public void getStuff()
 {
-  SmartDashboard.putNumber("Velocity: ", shooter.getSelectedSensorVelocity(0)* 600 / 4096);
+  SmartDashboard.putNumber("Shooter Velocity: ", shooter.getSelectedSensorVelocity(0)* 600 / 4096);
   //SmartDashboard.putNumber("I: ", kI);
   //SmartDashboard.putNumber("P: ", kP);
 }

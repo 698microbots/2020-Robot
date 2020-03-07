@@ -30,8 +30,10 @@ public class PickUp extends CommandBase {
   public void execute() {
     speedL = Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_L_Trigger);
     Robot.intake.retrieveBall(speedL);
+    Robot.intake.upserializer(speedL);
     speedR = Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_R_Trigger);
     Robot.intake.outtakeBall(speedR);
+    Robot.intake.downserializer(speedR);
   }
 
   // Called once the command ends or is interrupted.

@@ -133,7 +133,7 @@ public class Robot extends TimedRobot {
 
     // Set Default Commands for subsystems
     drive.setDefaultCommand(new JoyStickDrive());
-    turret.setDefaultCommand(new TurretJoyStick());
+    //  turret.setDefaultCommand(new TurretJoyStick());
     intake.setDefaultCommand(new PickUp());
   }
 

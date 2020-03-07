@@ -10,6 +10,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,24 +25,25 @@ public class Turret extends SubsystemBase {
   private static Constants consts = new Constants();
   public static TalonFX Turret = new TalonFX(consts.Turret);
 
-  public final int kPIDLoopIdx = 0;
+  public final int kPIDLoopIdx = 77;
   public final int kTimeoutMs = 30;
 
-  public  double kF = SmartDashboard.getNumber("F: ", 0.0);//1023.0/7200.0;
-  public  double kD = 0;
-  public  double kI = SmartDashboard.getNumber("I: ", 0.0);
-  public  double kP = SmartDashboard.getNumber("P: ", 0.0);
+  
 
+  public  double kF = SmartDashboard.getNumber("F: ", 0.0);//1023.0/7200.0;
+  public  double kD = consts.turretkD;
+  public  double kI = consts.turretkI;
+  public  double kP = consts.turretkp;
 
   public void initDefaultCommand() {
   }
 
   public Turret() 
   {
-    Turret.configFactoryDefault();
-    Turret.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, kPIDLoopIdx, kTimeoutMs);
-
-    Turret.setSensorPhase(true);
+    TalonFXConfiguration config = new TalonFXConfiguration();
+    config.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
+    Turret.configAllSettings(config);
+    Turret.setSelectedSensorPosition(0);
   }
   public void rotate(double position)
   {
@@ -51,38 +54,40 @@ public class Turret extends SubsystemBase {
     //}
     //else
     //{
-    kI = SmartDashboard.getNumber("I: ", 0);
-    kP = SmartDashboard.getNumber("P: ", 0);
-    kF = SmartDashboard.getNumber("F: ", 0);
-    kD = SmartDashboard.getNumber("D: ", 0);
-
-    Turret.configAllowableClosedloopError(0, kPIDLoopIdx, kTimeoutMs);
 
     Turret.configNominalOutputForward(0, kTimeoutMs);
     Turret.configNominalOutputReverse(0, kTimeoutMs);
-    Turret.configPeakOutputForward(1, kTimeoutMs);
-    Turret.configPeakOutputReverse(-1, kTimeoutMs);
+    Turret.configPeakOutputForward(0.2, kTimeoutMs);
+    Turret.configPeakOutputReverse(-0.2, kTimeoutMs);
 
-    // double absolutePosition = Turret.getSensorCollection().getIntegratedSensorPosition();
+    Turret.configForwardSoftLimitThreshold(10000, 0);
+    Turret.configReverseSoftLimitThreshold(-10000, 0);
+    Turret.configForwardSoftLimitEnable(true, 0);
+    Turret.configReverseSoftLimitEnable(true, 0);
 
-    // Turret.setSelectedSensorPosition(0, kPIDLoopIdx, kTimeoutMs);
+    Turret.configAllowableClosedloopError(0, kPIDLoopIdx, kTimeoutMs);
 
     //Turret.config_kF(kPIDLoopIdx, kF, kTimeoutMs);
-    //Turret.config_kD(kPIDLoopIdx, kD, kTimeoutMs);
-    //Turret.config_kI(kPIDLoopIdx, kI, kTimeoutMs);
-    Turret.config_kP(kPIDLoopIdx, kP, kTimeoutMs);
+    Turret.config_kD(0, kD, kTimeoutMs);
+    Turret.config_kI(0, kI, kTimeoutMs);
+    Turret.config_kP(0, kP, kTimeoutMs);
     
-    Turret.set(ControlMode.Position, position*4096);
+    //linear regression told us conversion lol ::pogchamp::
+    Turret.set(ControlMode.Position, position*4096.0/64.0);
     //}
+
+    SmartDashboard.putNumber("Motor Output: ", Turret.getMotorOutputPercent());
+    SmartDashboard.putNumber("Closed Error Loop: ", Turret.getClosedLoopError());
   }
   public double GetPosition()
   {
-    SmartDashboard.putNumber("position", Turret.getSelectedSensorPosition(0));
-    return Turret.getSelectedSensorPosition(0);
+    SmartDashboard.putNumber("position", Turret.getSelectedSensorPosition(0)*64.0/4096.0);
+    return Turret.getSelectedSensorPosition(0)*64.0/4096.0;
   }
-  public void GetSpeed()
+  public double GetSpeed()
   {
-    SmartDashboard.putNumber("speed", Turret.getSelectedSensorVelocity(0) * 600 / 2048 );
+    SmartDashboard.putNumber("speed", Turret.getSelectedSensorVelocity(0) * 600.0 / 2048.0 );
+    return Turret.getSelectedSensorVelocity(0) * 600.0 / 2048.0;
   }
   
   @Override
