@@ -7,40 +7,29 @@
 
 package frc.robot.commands.Intake;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class PickUp extends CommandBase {
+public class countBalls extends CommandBase {
   /**
-   * Creates a new PickUp.
+   * Creates a new countBalls.
    */
-  public PickUp() {
+  public countBalls() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.intake);
+      addRequirements(Robot.vision);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize() 
+  {
+    //call the count methood from vision subsystem
+    Robot.vision.count();
   }
-  double speedL;
-  double speedR;
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    speedL = Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_L_Trigger);
-    speedR = Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_R_Trigger);
-    if(speedL >= 0 && speedR == 0)
-    {
-      Robot.intake.retrieveBall(speedL);
-      Robot.intake.upserializer(speedL);
-    }
-    else
-    {
-      Robot.intake.outtakeBall(speedR);
-      Robot.intake.downserializer(speedR);
-    }
   }
 
   // Called once the command ends or is interrupted.

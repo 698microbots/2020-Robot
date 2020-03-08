@@ -16,7 +16,7 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    //can
+    // CAN IDs
     public int 	shooter  = 1;
     public int 	FrontRight = 4;
     public int FrontLeft = 3;
@@ -24,17 +24,21 @@ public final class Constants {
     public int BackLeft = 2;
     public int Turret = 7;
     public int intake = 6;
-    public int searializer = 8;
-    public int searializer2 = 9;
+    public int serializer1 = 8;
+    public int serializer2 = 9;
     public int indexer = 10;  
 
-    //shooter pid
+    // Shooter PID Configurations
     public double shooterkp = 0.05;
     public double shooterkf = 0.05;
     public double shooterkI = 0.001;
 
-    //turret pid
+    // Turret PID Configurations
     public double turretkp = 0.1;
     public double turretkI = 0.01;
     public double turretkD = 0;
+
+    // Photoe DIO IDs
+    public int photoe1 = 0;
+    public int photoe2 = 1;
 }

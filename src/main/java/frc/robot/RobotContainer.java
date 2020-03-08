@@ -16,6 +16,7 @@ import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Turret.AutoAim;
 import frc.robot.commands.Turret.TurretJoyStick;
 import frc.robot.commands.Drive.*;
+import frc.robot.commands.Intake.countBalls;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -77,6 +78,8 @@ public class RobotContainer {
     driverRBumber.whenPressed(new Turnoff());
     driverButtonB.whenPressed(new AutoAim());
     driverButtonY.whileHeld(new index());
+    driverButtonX.whenPressed(new countBalls());
+
 
     // driver 2 
     //driver1ButtonB.whenPressed(new TurretJoyStick(speed));

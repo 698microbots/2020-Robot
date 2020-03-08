@@ -22,6 +22,9 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 
 public class Vision extends SubsystemBase {
 
+    // Instantiate Constants class
+    Constants consts = new Constants();
+
     // PixyCam
     // Create instance for PixyCam
     private Pixy2 wof;
@@ -35,10 +38,14 @@ public class Vision extends SubsystemBase {
     private boolean isCamera;
 
     // Photoelectric Sensor
-    private DigitalInput photoe;
+    private DigitalInput photoe1;
+    private DigitalInput photoe2;
+    // Var for count # of balls in robot
+    private int count;
+
     //lime light
     NetworkTableEntry tx,ty,tv,ta,ts; 
-    int targetHieght = 98;
+    int targetHeight = 98;
     int limeLightHeight = 35;
     int limeLightAngle = 60;
     double limeLightAngleToTarget;
@@ -53,7 +60,8 @@ public class Vision extends SubsystemBase {
         state = -1;
 
         // Photoelectric var initialize
-        photoe = new DigitalInput(0);
+        photoe1 = new DigitalInput(consts.photoe1);
+        photoe2 = new DigitalInput(consts.photoe2);
 
         //tx = Robot.limelight.getEntry("tx");
     	//ty = Robot.limelight.getEntry("ty");
@@ -68,7 +76,7 @@ public class Vision extends SubsystemBase {
     public void GetDistance()
     {
         //limeLightAngleToTarget = ts.getDouble(0.0);
-        //double distance = (targetHieght - limeLightHeight) / Math.tan(limeLightAngle + limeLightAngleToTarget);
+        //double distance = (targetHeight - limeLightHeight) / Math.tan(limeLightAngle + limeLightAngleToTarget);
         //SmartDashboard.putNumber("distance", distance);
     }
     public double GetX()
@@ -77,9 +85,10 @@ public class Vision extends SubsystemBase {
     }
     public void countBalls()
     {
-        SmartDashboard.putBoolean("Photoe", photoe.get());
+        SmartDashboard.putBoolean("Photoe", photoe1.get());
     }
 
+    // Read colors on WOF
     public void readColor()
     {
         if(!isCamera){
@@ -121,5 +130,19 @@ public class Vision extends SubsystemBase {
             SmartDashboard.putNumber("Size: ", blocks.size());
         }
     }
-
+    
+    // Calls Photoe sensor to count number of balls intaked
+    public void count()
+    {
+        if(photoe1.get() == true)
+        {
+            count++;
+        }
+        
+        if(photoe1.get() == true)
+        {
+            count--;
+        }
+        SmartDashboard.putNumber("# of balls: ", count);
+    }
 }

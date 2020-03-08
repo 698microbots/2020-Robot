@@ -16,6 +16,7 @@ import frc.robot.Robot;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -25,7 +26,7 @@ public class Shooter extends SubsystemBase {
   // change Falcon ID
   //public static TalonFX shooter = new TalonFX(0);
   public static TalonFX shooter = new TalonFX(consts.shooter);
-  public static TalonFX indexer = new TalonFX(8);
+  public static VictorSPX indexer = new VictorSPX(consts.indexer);
   //public static VictorSP indexer = new VictorSP(0);
   //public static VictorSP shooter = new VictorSP(consts.shooter1);
   //public static VictorSP shooter1 = new VictorSP(consts.shooter2);
@@ -119,11 +120,11 @@ public class Shooter extends SubsystemBase {
 public void index()
 {
   //indexer.set(-.5);
-  indexer.set(TalonFXControlMode.PercentOutput , -0.1);
+  indexer.set(ControlMode.PercentOutput , -0.5);
 }
 public void indexstop()
 {
-  indexer.set(TalonFXControlMode.PercentOutput , 0);
+  indexer.set(ControlMode.PercentOutput , 0);
   //indexer.set(0);
 }
 

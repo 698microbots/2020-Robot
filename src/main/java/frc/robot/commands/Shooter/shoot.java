@@ -29,13 +29,12 @@ public class shoot extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //System.out.println("SHOOTER INITIALIZED");
   }
   double speed;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    speed = 1000;//SmartDashboard.getNumber("Setpoint", 500);
+    speed = SmartDashboard.getNumber("Shooter Velocity Setpoint", 0);
     Robot.shooter.run(speed);
   }
 
