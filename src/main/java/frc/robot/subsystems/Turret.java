@@ -28,9 +28,7 @@ public class Turret extends SubsystemBase {
   public final int kPIDLoopIdx = 77;
   public final int kTimeoutMs = 30;
 
-  
-
-  public  double kF = SmartDashboard.getNumber("F: ", 0.0);//1023.0/7200.0;
+  public  double kF = SmartDashboard.getNumber("F: ", 0.0);
   public  double kD = consts.turretkD;
   public  double kI = consts.turretkI;
   public  double kP = consts.turretkp;
@@ -38,22 +36,14 @@ public class Turret extends SubsystemBase {
   public void initDefaultCommand() {
   }
 
-  public Turret() 
-  {
+  public Turret() {
     TalonFXConfiguration config = new TalonFXConfiguration();
     config.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
     Turret.configAllSettings(config);
     Turret.setSelectedSensorPosition(0);
   }
-  public void rotate(double position)
-  {
-    
-    //if((Turret.getSelectedSensorPosition(0) > 100 && speed > 0) || (Turret.getSelectedSensorPosition(0) < -100 && speed < 0) )
-    //{
-     // Turret.set(TalonFXControlMode.PercentOutput , 0);
-    //}
-    //else
-    //{
+
+  public void rotate(double position) {
 
     Turret.configNominalOutputForward(0, kTimeoutMs);
     Turret.configNominalOutputReverse(0, kTimeoutMs);
@@ -74,18 +64,16 @@ public class Turret extends SubsystemBase {
     
     //linear regression told us conversion lol ::pogchamp::
     Turret.set(ControlMode.Position, position*4096.0/64.0);
-    //}
 
     SmartDashboard.putNumber("Motor Output: ", Turret.getMotorOutputPercent());
     SmartDashboard.putNumber("Closed Error Loop: ", Turret.getClosedLoopError());
   }
-  public double GetPosition()
-  {
+  public double getPosition() {
     SmartDashboard.putNumber("position", Turret.getSelectedSensorPosition(0)*64.0/4096.0);
     return Turret.getSelectedSensorPosition(0)*64.0/4096.0;
   }
-  public double GetSpeed()
-  {
+
+  public double getVelocity() {
     SmartDashboard.putNumber("speed", Turret.getSelectedSensorVelocity(0) * 600.0 / 2048.0 );
     return Turret.getSelectedSensorVelocity(0) * 600.0 / 2048.0;
   }

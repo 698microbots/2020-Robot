@@ -24,8 +24,8 @@ public final class Constants {
     public int BackLeft = 2;
     public int Turret = 7;
     public int intake = 6;
-    public int serializer1 = 8;
-    public int serializer2 = 9;
+    public int serializer2 = 8;
+    public int serializer1 = 9;
     public int indexer = 10;  
 
     // Shooter PID Configurations

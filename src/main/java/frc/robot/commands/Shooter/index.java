@@ -27,7 +27,8 @@ public class index extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.shooter.index();
+    // Runs indexer between serializer and turret
+    Robot.shooter.index(0.5);
   }
 
   // Called once the command ends or is interrupted.

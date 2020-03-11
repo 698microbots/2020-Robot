@@ -10,7 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -33,6 +33,7 @@ import frc.robot.commands.Drive.JoyStickDrive;
 import frc.robot.commands.Intake.PickUp;
 import frc.robot.commands.Shooter.Turnoff;
 import frc.robot.commands.Turret.TurretJoyStick;
+import frc.robot.commands.Intake.intakeOff;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -54,10 +55,10 @@ public class Robot extends TimedRobot {
   public static Turret turret = new Turret();
   public static Intake intake = new Intake();
 
-  //Create lime light
+  // Create Limelight
   public static NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
-  //variable for fms
+  // Var for fms
     String gameData;
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -68,7 +69,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     oi = new RobotContainer();
-    shooter.setDefaultCommand(new ShooterIdle());
   }
 
   /**
@@ -135,6 +135,7 @@ public class Robot extends TimedRobot {
     drive.setDefaultCommand(new JoyStickDrive());
     //  turret.setDefaultCommand(new TurretJoyStick());
     intake.setDefaultCommand(new PickUp());
+    shooter.setDefaultCommand(new ShooterIdle());
   }
 
   /**
@@ -142,41 +143,33 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    shooter.getStuff();
-    //shooter.run(-1*oi.xbox0.getRawAxis(4)*0.50);
-    //SmartDashboard.putNumber("Axis", oi.xbox0.getRawAxis(1));
-    //SmartDashboard.putNumber("current",pdp.getCurrent(3));
-    
-    //vision.readColor();
-    //vision.countBalls();
-    //drive.getDriveValues();
-    //vision.GetDistance();
-    turret.GetPosition();
-    turret.GetSpeed();
+    // Needs to be removed
+    shooter.getVelocity();
+    turret.getPosition();
+    turret.getVelocity();
 
-      gameData = DriverStation.getInstance().getGameSpecificMessage();
-      if(gameData.length() > 0)
-      {
-        switch(gameData.charAt(0))
-        {
-            case 'B' :
-            //blue code
-            SmartDashboard.putString("wheel color", "Blue");
-            break;
-            case 'R' :
-            //red code
-            SmartDashboard.putString("wheel color", "Red");
-            break;
-            case 'Y' :
-            //yellow code
-            SmartDashboard.putString("wheel color", "Yellow");
-            break;
-            case 'G' :
-            //green code
-            SmartDashboard.putString("wheel color", "Green");
-            break;
-        }
+    // Read from FMS for WOF
+    gameData = DriverStation.getInstance().getGameSpecificMessage();
+    if(gameData.length() > 0){
+      switch(gameData.charAt(0)){
+          case 'B' :
+          //blue code
+          SmartDashboard.putString("wheel color", "Blue");
+          break;
+          case 'R' :
+          //red code
+          SmartDashboard.putString("wheel color", "Red");
+          break;
+          case 'Y' :
+          //yellow code
+          SmartDashboard.putString("wheel color", "Yellow");
+          break;
+          case 'G' :
+          //green code
+          SmartDashboard.putString("wheel color", "Green");
+          break;
       }
+    }
   }
 
   @Override

@@ -12,9 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.Turret;
 public class AutoAim extends CommandBase {
-  double kp = .25;
-	double sp_max = .05;
-  double sp = 0.025;
+  // updated var is used to only call limelight target once
   boolean updated = false;
   double x;
   /**
@@ -24,13 +22,9 @@ public class AutoAim extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.turret);
     addRequirements(Robot.vision);
-    SmartDashboard.putNumber("TurretSetpoint", 10);
-    // SmartDashboard.putNumber("Shooter kP: ", .25);
-    // SmartDashboard.putNumber("Shooter sp: ", 0.05);
-    // SmartDashboard.putNumber("Shooter sp_max: ", 0.025);
-    // kp = SmartDashboard.getNumber("Shooter kP: ", .25);
-    // sp = SmartDashboard.getNumber("Shooter sp: ", 0.05);
-    // sp_max = SmartDashboard.getNumber("Shooter sp_max: ", 0.025);
+
+    // FOR TESTING PURPOSES: Turret Setpoint acts like a Limelight
+    //SmartDashboard.putNumber("TurretSetpoint", 10);
     Robot.turret.Turret.setSelectedSensorPosition(0);
   }
 
@@ -44,9 +38,6 @@ public class AutoAim extends CommandBase {
   @Override
   public void execute() 
   {
-    // kp = SmartDashboard.getNumber("Shooter kP: ", .25);
-    // sp = SmartDashboard.getNumber("Shooter sp: ", 0.05);
-    // sp_max = SmartDashboard.getNumber("Shooter sp_max: ", 0.1);
     //double x = SmartDashboard.getNumber("TurretSetpoint", 10);
     //x += Robot.turret.GetPosition();
     if(updated == false){
@@ -55,14 +46,6 @@ public class AutoAim extends CommandBase {
     }
     SmartDashboard.putNumber("X Limelight", x);
     Robot.turret.rotate(x);
-    // if (x > 0)
-    // {
-    //   SmartDashboard.putNumber("Rotation Value", ((sp - x*kp)<sp_max?(sp - x*kp):sp_max));
-    //   Robot.turret.rotate(Math.max(-1*((sp - x*kp)<sp_max?(sp - x*kp):sp_max),0));
-    // }else
-    // {
-    //   Robot.turret.rotate(Math.min(((sp - x*kp)<sp_max?(sp - x*kp):sp_max),sp_max));
-    // }
   }
 
   // Called once the command ends or is interrupted.
@@ -73,7 +56,7 @@ public class AutoAim extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Robot.turret.GetSpeed() <= 0.005)
+    if(Robot.turret.getVelocity() <= 0.005)
     {
       return true;
     }

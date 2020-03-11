@@ -28,12 +28,14 @@ public class shoot extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize() { 
   }
+  
   double speed;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+     // Turns on flywheel at a certain rpm
     speed = SmartDashboard.getNumber("Shooter Velocity Setpoint", 0);
     Robot.shooter.run(speed);
   }

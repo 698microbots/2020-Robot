@@ -33,15 +33,18 @@ public class AutoDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // Auto drive code needs to be fixed
+    // Current Implementation: Drive 10000 raw sensor units and then stop motors, Double check calc on
+    // Robot.drive.getPosition()
+    // TODO: Uncomment code after tank drive fix
     double currentPos = Robot.drive.getPosition();
-    while(currentPos > -10000)
-    {
+    while(currentPos > -10000) {
       SmartDashboard.putNumber("Position: ", currentPos);
-      Robot.drive.setLeftSpeed(0.1);
+      //Robot.drive.setLeftSpeed(0.1);
       Robot.drive.setRightSpeed(0.1);
       currentPos = Robot.drive.getPosition();
     }
-    Robot.drive.setLeftSpeed(0.0);
+    //Robot.drive.setLeftSpeed(0.0);
     Robot.drive.setRightSpeed(0.0);
   }
 

@@ -18,8 +18,7 @@ public class Wof extends SubsystemBase {
   public Wof() {
 
   }
-  public void setSpeed(double speed)
-  {
+  public void setSpeed(double speed) {
     wof.set(speed);
   }
 

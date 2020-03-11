@@ -73,24 +73,21 @@ public class Vision extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
     }
-    public void GetDistance()
-    {
+    public void GetDistance() {
         //limeLightAngleToTarget = ts.getDouble(0.0);
         //double distance = (targetHeight - limeLightHeight) / Math.tan(limeLightAngle + limeLightAngleToTarget);
         //SmartDashboard.putNumber("distance", distance);
     }
-    public double GetX()
-    {
+    public double GetX() {
         return Robot.limelight.getEntry("tx").getDouble(0.0);
     }
-    public void countBalls()
-    {
+
+    public void countBalls() {
         SmartDashboard.putBoolean("Photoe", photoe1.get());
     }
 
     // Read colors on WOF
-    public void readColor()
-    {
+    public void readColor() {
         if(!isCamera){
             // Initialize PixyCam if no camera present
             state = wof.init(0);
@@ -105,8 +102,7 @@ public class Vision extends SubsystemBase {
         // get blocks
         blocks = wof.getCCC().getBlocks();
 
-        if(blocks.size() > 0)
-        {
+        if(blocks.size() > 0) {
             // x and y position of largest target
             double xCoord = blocks.get(0).getX();
             double yCoord = blocks.get(0).getY();
@@ -123,8 +119,7 @@ public class Vision extends SubsystemBase {
             SmartDashboard.putString("Color: ", colors[signature]);
             SmartDashboard.putString("Data: ", data);
         }
-        else
-        {
+        else {
             SmartDashboard.putBoolean("Present: ", false);
             // Check to see how many targets are present
             SmartDashboard.putNumber("Size: ", blocks.size());
@@ -132,15 +127,12 @@ public class Vision extends SubsystemBase {
     }
     
     // Calls Photoe sensor to count number of balls intaked
-    public void count()
-    {
-        if(photoe1.get() == true)
-        {
+    public void count() {
+        if(photoe1.get() == true) {
             count++;
         }
         
-        if(photoe1.get() == true)
-        {
+        if(photoe1.get() == true) {
             count--;
         }
         SmartDashboard.putNumber("# of balls: ", count);

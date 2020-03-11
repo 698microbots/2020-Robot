@@ -42,12 +42,18 @@ public class Drive extends SubsystemBase {
     FrontRight.set(TalonFXControlMode.PercentOutput,speed);
   }
 
-  // Set Left Speeds on Drive Train
-  public void setLeftSpeed(double speed) {
+  // Set Speeds on Drive Train (Tank Drive)
+  public void setSpeed(double speed, double speed1) {
+    // Ensures speed and speed 1 are within range [-1,1]
 		if(speed<-1) speed =-1;
-		if(speed>1) speed=1;
+    if(speed>1) speed=1;
+    if(speed1<-1) speed1 =-1;
+    if(speed1>1) speed1=1;
+    
 		BackLeft.set(TalonFXControlMode.PercentOutput,speed);
-		FrontLeft.set(TalonFXControlMode.PercentOutput,speed);
+    FrontLeft.set(TalonFXControlMode.PercentOutput,speed);
+    BackRight.set(TalonFXControlMode.PercentOutput,speed1);
+		FrontRight.set(TalonFXControlMode.PercentOutput,speed1);
   }
 
   @Override
@@ -56,24 +62,23 @@ public class Drive extends SubsystemBase {
   }
 
   // Get Encoder Values from Drive Train motors
-  public void getDriveValues()
-  {
+  public void getDriveValues(){
     SmartDashboard.putNumber("Front Right Speed: ", FrontRight.getSelectedSensorVelocity(0)* 600 / 2048);
     SmartDashboard.putNumber("Front Left Speed: ", FrontLeft.getSelectedSensorVelocity(0)* 600 / 2048);
     SmartDashboard.putNumber("Back Right Speed: ", BackRight.getSelectedSensorVelocity(0)* 600 / 2048);
     SmartDashboard.putNumber("Back Left Speed: ", BackLeft.getSelectedSensorVelocity(0)* 600 / 2048);
   }
 
-  public void resetEncoders()
-  {
+  public void resetEncoders(){
     FrontRight.setSelectedSensorPosition(0);
     FrontLeft.setSelectedSensorPosition(0);
     BackRight.setSelectedSensorPosition(0);
     BackLeft.setSelectedSensorPosition(0);
   }
 
-  public double getPosition()
-  {
-    return FrontRight.getSelectedSensorPosition(0);
+  // Retrieve Position of frontright motor
+  // TODO: Double check these calcs are correct
+  public double getPosition(){
+    return FrontRight.getSelectedSensorPosition(0)*64.0/4096.0;
   }
 }

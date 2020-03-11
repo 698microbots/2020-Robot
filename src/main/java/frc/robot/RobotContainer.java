@@ -35,27 +35,27 @@ public class RobotContainer {
   public int XBOX_L_YAXIS = 1;
   public int XBOX_L_Trigger = 2;
   public int XBOX_R_Trigger = 3;
+
   //Driver 1
   public XboxController	xbox0 	= new XboxController(0);
-  public JoystickButton driverButtonA = new JoystickButton(xbox0, 1);
-  public JoystickButton driverButtonX = new JoystickButton(xbox0, 3);
-  public JoystickButton driverButtonY = new JoystickButton(xbox0, 4);
-  public JoystickButton driverButtonB = new JoystickButton(xbox0, 2);
-  public JoystickButton driverLBumber = new JoystickButton(xbox0, 5);
-  public JoystickButton driverRBumber = new JoystickButton(xbox0, 6);
+  public JoystickButton driver1ButtonA = new JoystickButton(xbox0, 1);
+  public JoystickButton driver1ButtonX = new JoystickButton(xbox0, 3);
+  public JoystickButton driver1ButtonY = new JoystickButton(xbox0, 4);
+  public JoystickButton driver1ButtonB = new JoystickButton(xbox0, 2);
+  public JoystickButton driver1LBumber = new JoystickButton(xbox0, 5);
+  public JoystickButton driver1RBumber = new JoystickButton(xbox0, 6);
+  public JoystickButton driver1Buttonback = new JoystickButton(xbox0, 7);
+  public JoystickButton driver1Buttonstart = new JoystickButton(xbox0, 8);
 
 
   //Driver 2
   public XboxController	xbox1 	= new XboxController(1);
-  public JoystickButton driver1ButtonA = new JoystickButton(xbox1, 1);
-  public JoystickButton driver1ButtonX = new JoystickButton(xbox1, 3);
-  public JoystickButton driver1ButtonY = new JoystickButton(xbox1, 4);
-  public JoystickButton driver1ButtonB = new JoystickButton(xbox1, 2);
-
-  private double speed = SmartDashboard.getNumber("Set Turret Speed: ", 0.01);
-
-  
-
+  public JoystickButton driver2ButtonA = new JoystickButton(xbox1, 1);
+  public JoystickButton driver2ButtonX = new JoystickButton(xbox1, 3);
+  public JoystickButton driver2ButtonY = new JoystickButton(xbox1, 4);
+  public JoystickButton driver2ButtonB = new JoystickButton(xbox1, 2);
+  public JoystickButton driver2RBumber = new JoystickButton(xbox1, 6);
+  public JoystickButton driver2LBumber = new JoystickButton(xbox1, 5);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -74,15 +74,14 @@ public class RobotContainer {
   
   private void configureButtonBindings() {
     //driver 1
-    driverButtonA.whileHeld(new shoot());
-    driverRBumber.whenPressed(new Turnoff());
-    driverButtonB.whenPressed(new AutoAim());
-    driverButtonY.whileHeld(new index());
-    driverButtonX.whenPressed(new countBalls());
+    driver1RBumber.whenPressed(new Turnoff());
+    driver1ButtonB.whenPressed(new AutoAim());
+    driver1ButtonY.whileHeld(new index());
+    driver1ButtonX.whenPressed(new countBalls());
 
 
     // driver 2 
-    //driver1ButtonB.whenPressed(new TurretJoyStick(speed));
+    driver2ButtonA.whileHeld(new shoot());
     
   }
 

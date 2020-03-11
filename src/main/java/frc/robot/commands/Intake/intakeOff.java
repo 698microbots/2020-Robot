@@ -1,26 +1,22 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Drive;
+package frc.robot.commands.Intake;
 
-import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-public class JoyStickDrive extends CommandBase {
+public class intakeOff extends CommandBase {
   /**
-   * Creates the JoyStick Command.
-   *
-   * @param subsystem The subsystem used by this command.
+   * Creates a new intakeOff.
    */
-  public JoyStickDrive() {
+  public intakeOff() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.drive);
+    addRequirements(Robot.intake);
   }
 
   // Called when the command is initially scheduled.
@@ -28,25 +24,11 @@ public class JoyStickDrive extends CommandBase {
   public void initialize() {
   }
 
-  double leftStick;
-  double rightStick;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Mapping for xbox controller
-    leftStick = -1* Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_L_YAXIS);
-	  rightStick = Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_R_YAXIS);
-
-    // Deadband
-		if(Math.abs(leftStick) < .12) {
-		 	leftStick = 0;
-		}
-		if(Math.abs(rightStick) < .12) {
-		 	rightStick = 0;
-    }
-  
-    // Set Motor Speed
-		Robot.drive.setSpeed(leftStick, rightStick);
+    Robot.intake.retrieveBall(0);
+    Robot.intake.upserializer1(0);
   }
 
   // Called once the command ends or is interrupted.

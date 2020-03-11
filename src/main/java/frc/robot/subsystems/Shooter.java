@@ -23,15 +23,8 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class Shooter extends SubsystemBase {
   private static Constants consts = new Constants();
-  // change Falcon ID
-  //public static TalonFX shooter = new TalonFX(0);
   public static TalonFX shooter = new TalonFX(consts.shooter);
   public static VictorSPX indexer = new VictorSPX(consts.indexer);
-  //public static VictorSP indexer = new VictorSP(0);
-  //public static VictorSP shooter = new VictorSP(consts.shooter1);
-  //public static VictorSP shooter1 = new VictorSP(consts.shooter2);
-  //public static TalonSRX shooter1 = new TalonSRX(consts.shooter1);
-  //public static TalonSRX shooter2 = new TalonSRX(consts.shooter2);
 
   public final int kPIDLoopIdx = 0;
   public final int kTimeoutMs = 30;
@@ -42,7 +35,7 @@ public class Shooter extends SubsystemBase {
   public  double kP = SmartDashboard.getNumber("Shoot P: ", 0);
 
   public static PowerDistributionPanel pdp = new PowerDistributionPanel();
-  //private static int CurrentCounter = 0;
+  private static int CurrentCounter = 0;
 
   public void initDefaultCommand() {
   }
@@ -59,12 +52,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shoot F: ", 0);
     SmartDashboard.putString("Notes", "Hey guys, there is like a two to one gear ratio so don't like go sicko mode");
   }
-  public void run(final double speed)
-  {
-    // if(speed <= 0.05)
-    // {
-    //   speed = 0;
-    // }
+  public void run(final double speed){
     
     // if(pdp.getCurrent(3) < 60)
     // {
@@ -104,38 +92,27 @@ public class Shooter extends SubsystemBase {
 
     shooter.setInverted(true);
     shooter.set(ControlMode.Velocity, speed * 4096 / 600);
-    //shooter2.follow(shooter);
-
-    // shooter1.setInverted(true);
-    // shooter1.set(ControlMode.PercentOutput,speed);
-    }
-
-  public void norun()
-  {
-    //shooter.set(ControlMode.Velocity,0);
-    shooter.set(ControlMode.PercentOutput,0);
-    //shooter2.follow(shooter1);
-    //shooter1.set(0);
   }
-public void index()
-{
-  //indexer.set(-.5);
-  indexer.set(ControlMode.PercentOutput , -0.5);
-}
-public void indexstop()
-{
-  indexer.set(ControlMode.PercentOutput , 0);
-  //indexer.set(0);
-}
 
-public void getStuff()
-{
-  SmartDashboard.putNumber("Shooter Velocity: ", shooter.getSelectedSensorVelocity(0)* 600 / 4096);
-  //SmartDashboard.putNumber("I: ", kI);
-  //SmartDashboard.putNumber("P: ", kP);
-}
+  public void norun(){
+    shooter.set(ControlMode.PercentOutput,0);
+  }
+
+  public void index(double speed){
+    indexer.set(ControlMode.PercentOutput , speed);
+  }
+
+  public void indexstop(){
+    indexer.set(ControlMode.PercentOutput , 0);
+  }
+
+  public void getVelocity(){
+    SmartDashboard.putNumber("Shooter Velocity: ", shooter.getSelectedSensorVelocity(0)* 600 / 4096);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
 }

@@ -19,7 +19,6 @@ public class TurretJoyStick extends CommandBase {
   public TurretJoyStick() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.turret);
-    //this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -30,16 +29,10 @@ public class TurretJoyStick extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    // Manual movement of Turret using xbox controls
+    // TODO: Needs to be changed so not same xbox control is being called
     speed =  Robot.oi.xbox0.getRawAxis(Robot.oi.XBOX_L_XAXIS) * .10;
-    //dead band
-	  //if(Math.abs(speed) < .12)
-		//{
-		 	//speed = 0;
-		//}
     Robot.turret.rotate(speed);
-    
-    //Robot.turret.rotate(speed);
   }
 
   // Called once the command ends or is interrupted.

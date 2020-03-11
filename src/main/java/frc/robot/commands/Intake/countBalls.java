@@ -21,9 +21,7 @@ public class countBalls extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() 
-  {
-    //call the count methood from vision subsystem
+  public void initialize() {
     Robot.vision.count();
   }
 
