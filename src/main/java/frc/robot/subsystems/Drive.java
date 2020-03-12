@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -14,6 +15,7 @@ import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.kauailabs.navx.frc.AHRS;
 ;
 
 public class Drive extends SubsystemBase {
@@ -23,6 +25,9 @@ public class Drive extends SubsystemBase {
   public static TalonFX FrontLeft = new TalonFX(consts.FrontLeft);
   public static TalonFX BackRight = new TalonFX(consts.BackRight);
   public static TalonFX BackLeft = new TalonFX(consts.BackLeft);
+
+  // Create NavX
+  public static AHRS navx = new AHRS(SPI.Port.kMXP);
 
 
   public Drive()   {
@@ -44,16 +49,31 @@ public class Drive extends SubsystemBase {
 
   // Set Speeds on Drive Train (Tank Drive)
   public void setSpeed(double speed, double speed1) {
-    // Ensures speed and speed 1 are within range [-1,1]
+    // Ensures speed and speed1 are within range [-1,1]
 		if(speed<-1) speed =-1;
     if(speed>1) speed=1;
     if(speed1<-1) speed1 =-1;
     if(speed1>1) speed1=1;
-    
-		BackLeft.set(TalonFXControlMode.PercentOutput,speed);
-    FrontLeft.set(TalonFXControlMode.PercentOutput,speed);
-    BackRight.set(TalonFXControlMode.PercentOutput,speed1);
-		FrontRight.set(TalonFXControlMode.PercentOutput,speed1);
+
+    SmartDashboard.putNumber("ROLL: ", navx.getRoll());
+    if(navx.getRoll() <= -10){
+      BackLeft.set(TalonFXControlMode.PercentOutput,-0.15);
+      FrontLeft.set(TalonFXControlMode.PercentOutput,-0.15);
+      BackRight.set(TalonFXControlMode.PercentOutput,0.15);
+		  FrontRight.set(TalonFXControlMode.PercentOutput,0.15);
+    }
+    else if(navx.getRoll() >= 10){
+      BackLeft.set(TalonFXControlMode.PercentOutput,0.15);
+      FrontLeft.set(TalonFXControlMode.PercentOutput,0.15);
+      BackRight.set(TalonFXControlMode.PercentOutput,-0.15);
+		  FrontRight.set(TalonFXControlMode.PercentOutput,-0.15);
+    }
+    else{
+      BackLeft.set(TalonFXControlMode.PercentOutput,speed);
+      FrontLeft.set(TalonFXControlMode.PercentOutput,speed);
+      BackRight.set(TalonFXControlMode.PercentOutput,speed1);
+		  FrontRight.set(TalonFXControlMode.PercentOutput,speed1);
+    }
   }
 
   @Override

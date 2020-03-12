@@ -28,10 +28,10 @@ public class Turret extends SubsystemBase {
   public final int kPIDLoopIdx = 77;
   public final int kTimeoutMs = 30;
 
-  public  double kF = SmartDashboard.getNumber("F: ", 0.0);
+  public  double kF = consts.turretkF;
   public  double kD = consts.turretkD;
   public  double kI = consts.turretkI;
-  public  double kP = consts.turretkp;
+  public  double kP = consts.turretkP;
 
   public void initDefaultCommand() {
   }
@@ -43,7 +43,7 @@ public class Turret extends SubsystemBase {
     Turret.setSelectedSensorPosition(0);
   }
 
-  public void rotate(double position) {
+  public void autorotate(double position) {
 
     Turret.configNominalOutputForward(0, kTimeoutMs);
     Turret.configNominalOutputReverse(0, kTimeoutMs);
@@ -57,7 +57,7 @@ public class Turret extends SubsystemBase {
 
     Turret.configAllowableClosedloopError(0, kPIDLoopIdx, kTimeoutMs);
 
-    //Turret.config_kF(kPIDLoopIdx, kF, kTimeoutMs);
+    Turret.config_kF(kPIDLoopIdx, kF, kTimeoutMs);
     Turret.config_kD(0, kD, kTimeoutMs);
     Turret.config_kI(0, kI, kTimeoutMs);
     Turret.config_kP(0, kP, kTimeoutMs);
@@ -68,6 +68,11 @@ public class Turret extends SubsystemBase {
     SmartDashboard.putNumber("Motor Output: ", Turret.getMotorOutputPercent());
     SmartDashboard.putNumber("Closed Error Loop: ", Turret.getClosedLoopError());
   }
+
+  public void rotate(double speed){
+    Turret.set(ControlMode.PercentOutput, speed);
+  }
+
   public double getPosition() {
     SmartDashboard.putNumber("position", Turret.getSelectedSensorPosition(0)*64.0/4096.0);
     return Turret.getSelectedSensorPosition(0)*64.0/4096.0;

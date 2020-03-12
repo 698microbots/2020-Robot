@@ -29,14 +29,16 @@ public final class Constants {
     public int indexer = 10;  
 
     // Shooter PID Configurations
-    public double shooterkp = 0.05;
-    public double shooterkf = 0.05;
-    public double shooterkI = 0.001;
+    public double shooterkP = 0.9;
+    public double shooterkF = 0.0;
+    public double shooterkI = 0.0001;
+    public double shooterkD = 0.0;
 
     // Turret PID Configurations
-    public double turretkp = 0.1;
-    public double turretkI = 0.01;
-    public double turretkD = 0;
+    public double turretkP = 0.1;
+    public double turretkI = 0.005;
+    public double turretkD = 0.0;
+    public double turretkF = 0.0;
 
     // Photoe DIO IDs
     public int photoe1 = 0;

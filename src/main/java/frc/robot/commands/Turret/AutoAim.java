@@ -32,6 +32,7 @@ public class AutoAim extends CommandBase {
   @Override
   public void initialize() {
     updated = false;
+    Robot.ledMode.setNumber(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,7 +46,7 @@ public class AutoAim extends CommandBase {
       updated = true;
     }
     SmartDashboard.putNumber("X Limelight", x);
-    Robot.turret.rotate(x);
+    Robot.turret.autorotate(x);
   }
 
   // Called once the command ends or is interrupted.
@@ -58,6 +59,7 @@ public class AutoAim extends CommandBase {
   public boolean isFinished() {
     if(Robot.turret.getVelocity() <= 0.005)
     {
+      Robot.ledMode.setNumber(1);
       return true;
     }
     else return false;

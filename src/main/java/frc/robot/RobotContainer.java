@@ -19,10 +19,11 @@ import frc.robot.commands.Drive.*;
 import frc.robot.commands.Intake.countBalls;
 
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
@@ -30,35 +31,34 @@ public class RobotContainer {
   private final AutoCommandGroup m_autoCommand = new AutoCommandGroup();
 
   public int XBOX_R_XAXIS = 4;
-	public int XBOX_R_YAXIS = 5;
-	public int XBOX_L_XAXIS = 0;
+  public int XBOX_R_YAXIS = 5;
+  public int XBOX_L_XAXIS = 0;
   public int XBOX_L_YAXIS = 1;
   public int XBOX_L_Trigger = 2;
   public int XBOX_R_Trigger = 3;
 
-  //Driver 1
-  public XboxController	xbox0 	= new XboxController(0);
+  // Driver 1
+  public XboxController xbox0 = new XboxController(0);
   public JoystickButton driver1ButtonA = new JoystickButton(xbox0, 1);
   public JoystickButton driver1ButtonX = new JoystickButton(xbox0, 3);
   public JoystickButton driver1ButtonY = new JoystickButton(xbox0, 4);
   public JoystickButton driver1ButtonB = new JoystickButton(xbox0, 2);
-  public JoystickButton driver1LBumber = new JoystickButton(xbox0, 5);
-  public JoystickButton driver1RBumber = new JoystickButton(xbox0, 6);
+  public JoystickButton driver1LBumper = new JoystickButton(xbox0, 5);
+  public JoystickButton driver1RBumper = new JoystickButton(xbox0, 6);
   public JoystickButton driver1Buttonback = new JoystickButton(xbox0, 7);
   public JoystickButton driver1Buttonstart = new JoystickButton(xbox0, 8);
 
-
-  //Driver 2
-  public XboxController	xbox1 	= new XboxController(1);
+  // Driver 2
+  public XboxController xbox1 = new XboxController(1);
   public JoystickButton driver2ButtonA = new JoystickButton(xbox1, 1);
   public JoystickButton driver2ButtonX = new JoystickButton(xbox1, 3);
   public JoystickButton driver2ButtonY = new JoystickButton(xbox1, 4);
   public JoystickButton driver2ButtonB = new JoystickButton(xbox1, 2);
-  public JoystickButton driver2RBumber = new JoystickButton(xbox1, 6);
-  public JoystickButton driver2LBumber = new JoystickButton(xbox1, 5);
+  public JoystickButton driver2RBumper = new JoystickButton(xbox1, 6);
+  public JoystickButton driver2LBumper = new JoystickButton(xbox1, 5);
 
   /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
@@ -66,23 +66,22 @@ public class RobotContainer {
   }
 
   /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  
+
   private void configureButtonBindings() {
-    //driver 1
-    driver1RBumber.whenPressed(new Turnoff());
-    driver1ButtonB.whenPressed(new AutoAim());
+    // driver 1
+    driver1RBumper.whenPressed(new Turnoff());
     driver1ButtonY.whileHeld(new index());
     driver1ButtonX.whenPressed(new countBalls());
 
-
     // driver 2 
-    driver2ButtonA.whileHeld(new shoot());
-    
+    driver2ButtonA.whenPressed(new shoot());
+    driver2ButtonX.whenPressed(new ShooterIdle());
+    driver2ButtonB.whenPressed(new AutoAim());
   }
 
 

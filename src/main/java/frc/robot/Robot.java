@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.SPI;
 //import subsystems
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
@@ -25,15 +26,18 @@ import frc.robot.subsystems.Intake;
 import frc.robot.commands.Shooter.*;
 
 import edu.wpi.first.wpilibj.XboxController;
+
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.commands.Drive.AutoDrive;
 //import commands to be default
 import frc.robot.commands.Drive.JoyStickDrive;
-import frc.robot.commands.Intake.PickUp;
+import frc.robot.commands.Intake.MoveBalls;
 import frc.robot.commands.Shooter.Turnoff;
 import frc.robot.commands.Turret.TurretJoyStick;
-import frc.robot.commands.Intake.intakeOff;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -57,6 +61,9 @@ public class Robot extends TimedRobot {
 
   // Create Limelight
   public static NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
+  public static NetworkTableEntry ledMode = limelight.getEntry("ledMode");
+
+  public static AHRS navx = new AHRS(SPI.Port.kMXP);
 
   // Var for fms
     String gameData;
@@ -133,9 +140,10 @@ public class Robot extends TimedRobot {
 
     // Set Default Commands for subsystems
     drive.setDefaultCommand(new JoyStickDrive());
-    //  turret.setDefaultCommand(new TurretJoyStick());
-    intake.setDefaultCommand(new PickUp());
+    //turret.setDefaultCommand(new TurretJoyStick());
     shooter.setDefaultCommand(new ShooterIdle());
+    intake.setDefaultCommand(new MoveBalls());
+    ledMode.setNumber(1);
   }
 
   /**
@@ -170,6 +178,10 @@ public class Robot extends TimedRobot {
           break;
       }
     }
+
+    // TODO: Needs to be put into separate file
+    // Testing Purposes
+    // SmartDashboard.putNumber("Roll: ", navx.getRoll());
   }
 
   @Override

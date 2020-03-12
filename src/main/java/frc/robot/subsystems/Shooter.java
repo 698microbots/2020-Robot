@@ -75,10 +75,10 @@ public class Shooter extends SubsystemBase {
     // SmartDashboard.putNumber("encoder: ", shooter.getSelectedSensorVelocity(0));
     // SmartDashboard.putNumber("Current Counter: ", CurrentCounter); 
 
-    kP = SmartDashboard.getNumber("Shoot P: ", 0);
-    kI = SmartDashboard.getNumber("Shoot I: ", 0);
-    kD = SmartDashboard.getNumber("Shoot D: ", 0);
-    kF = SmartDashboard.getNumber("Shoot F: ", 0);
+    kP = consts.shooterkP;
+    kI = consts.shooterkI;
+    kD = consts.shooterkD;
+    kF = consts.shooterkF;
 
     shooter.configNominalOutputForward(0, kTimeoutMs);
     shooter.configNominalOutputReverse(0, kTimeoutMs);
