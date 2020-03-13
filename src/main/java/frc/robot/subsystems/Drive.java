@@ -31,7 +31,7 @@ public class Drive extends SubsystemBase {
   public static AHRS navx = new AHRS(SPI.Port.kMXP);
 	
   // Create Differential Drive Odometry Object and pose
-  DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(new Rotation2d(), new Pose2d(consts.InitalX, consts.InitialY, new Rotation2d());
+  DifferentialDriveOdometry m_odometry;
   Pose2d m_pose = new Pose2d(consts.InitalX, consts.InitialY, new Rotation2d());
 
   public Drive()   {
@@ -40,6 +40,12 @@ public class Drive extends SubsystemBase {
     FrontLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     BackRight.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     BackLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+    
+    //we must reset encoders before instantiating the odometry
+    resetEncoders();
+    
+    //create odometry
+    m_odometry = new DifferentialDriveOdometry(new Rotation2d(), new Pose2d(consts.InitalX, consts.InitialY, new Rotation2d());
   }
 
   // Set Right Speeds on Drive Train
