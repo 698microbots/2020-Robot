@@ -10,13 +10,14 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.kinematics;
+import edu.wpi.first.wpilibj.geometry;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
-;
 
 public class Drive extends SubsystemBase {
   // Create variables
@@ -28,6 +29,9 @@ public class Drive extends SubsystemBase {
 
   // Create NavX
   public static AHRS navx = new AHRS(SPI.Port.kMXP);
+	
+  // Create Differential Drive Odometry Object
+  DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(new Rotation2d(), new Pose2d(consts.InitalX, consts.InitialY, new Rotation2d());
 
 
   public Drive()   {
@@ -79,6 +83,12 @@ public class Drive extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    // Don't exactly know if it's Yaw or Pitch
+    SmartDashboard.putNumber("YAW: ", navx.getYaw());
+    Rotation2d gyroAngle = Rotation2d.fromDegrees(-navx.getYaw());
+    double right_position = (FrontRight.getSelectedSensorPosition(0)*64.0/4096.0) + 
+    // Update Odometry
+    m_pose = m_odometry.update(gyroAngle, m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
   }
 
   // Get Encoder Values from Drive Train motors
