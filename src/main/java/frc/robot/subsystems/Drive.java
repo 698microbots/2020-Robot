@@ -100,6 +100,10 @@ public class Drive extends SubsystemBase {
     
     // Update Odometry
     m_pose = m_odometry.update(gyroAngle, left_position, right_position);
+	  
+	  SmartDashboard.putNumber("Drive X", m_pose.getTranslation().getX());
+    SmartDashboard.putNumber("Drive Y", m_pose.getTranslation().getY());
+    SmartDashboard.putNumber("Drive Angle", m_pose.getRotation().getDegrees());
   }
 
   // Get Encoder Values from Drive Train motors
@@ -117,7 +121,7 @@ public class Drive extends SubsystemBase {
     BackLeft.setSelectedSensorPosition(0);
   }
 
-  // Retrieve Position of frontright motor
+  // Retrieve Pose Estimation from odometry
   public Pose2d getPosition(){
     return m_pose;
   }
