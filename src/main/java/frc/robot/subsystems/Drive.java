@@ -30,9 +30,9 @@ public class Drive extends SubsystemBase {
   // Create NavX
   public static AHRS navx = new AHRS(SPI.Port.kMXP);
 	
-  // Create Differential Drive Odometry Object
+  // Create Differential Drive Odometry Object and pose
   DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(new Rotation2d(), new Pose2d(consts.InitalX, consts.InitialY, new Rotation2d());
-
+  Pose2d m_pose = new Pose2d(consts.InitalX, consts.InitialY, new Rotation2d());
 
   public Drive()   {
     // Config Encoders
@@ -83,12 +83,17 @@ public class Drive extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    
     // Don't exactly know if it's Yaw or Pitch
     SmartDashboard.putNumber("YAW: ", navx.getYaw());
     Rotation2d gyroAngle = Rotation2d.fromDegrees(-navx.getYaw());
-    double right_position = (FrontRight.getSelectedSensorPosition(0)*64.0/4096.0) + 
+    
+    //Average position of the two encoders on each side
+    double right_position = ((FrontRight.getSelectedSensorPosition(0)*64.0/4096.0) + (BackRight.getSelectedSensorPosition(0)*64.0/4096.0))/2;
+    double left_position = ((FrontLeft.getSelectedSensorPosition(0)*64.0/4096.0) + (BackLeft.getSelectedSensorPosition(0)*64.0/4096.0))/2;
+    
     // Update Odometry
-    m_pose = m_odometry.update(gyroAngle, m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
+    m_pose = m_odometry.update(gyroAngle, left_position, right_position);
   }
 
   // Get Encoder Values from Drive Train motors
@@ -107,8 +112,7 @@ public class Drive extends SubsystemBase {
   }
 
   // Retrieve Position of frontright motor
-  // TODO: Double check these calcs are correct
-  public double getPosition(){
-    return FrontRight.getSelectedSensorPosition(0)*64.0/4096.0;
+  public Pose2d getPosition(){
+    return m_pose;
   }
 }
