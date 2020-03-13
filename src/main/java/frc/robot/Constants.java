@@ -43,4 +43,8 @@ public final class Constants {
     // Photoe DIO IDs
     public int photoe1 = 0;
     public int photoe2 = 1;
+    
+    //Initial Pose
+    public double InitialX = 0;
+    public double InitialY = 0;
 }
