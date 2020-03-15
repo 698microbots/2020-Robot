@@ -27,6 +27,10 @@ public final class Constants {
     public int serializer2 = 8;
     public int serializer1 = 9;
     public int indexer = 10;  
+    
+    // Photoe DIO IDs
+    public int photoe1 = 0;
+    public int photoe2 = 1;
 
     // Shooter PID Configurations
     public double shooterkP = 0.9;
@@ -39,10 +43,6 @@ public final class Constants {
     public double turretkI = 0.005;
     public double turretkD = 0.0;
     public double turretkF = 0.0;
-
-    // Photoe DIO IDs
-    public int photoe1 = 0;
-    public int photoe2 = 1;
     
     //Initial Pose
     public double InitialX = 0;
