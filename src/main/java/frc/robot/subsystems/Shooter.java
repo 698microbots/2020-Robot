@@ -29,10 +29,10 @@ public class Shooter extends SubsystemBase {
   public final int kPIDLoopIdx = 0;
   public final int kTimeoutMs = 30;
 
-  public  double kF = SmartDashboard.getNumber("Shoot F : ", 0);
-  public  double kD = 0;
-  public  double kI = SmartDashboard.getNumber("Shoot I: ", 0);
-  public  double kP = SmartDashboard.getNumber("Shoot P: ", 0);
+  public  double kF = consts.shooterkF;
+  public  double kD = consts.shooterkD;
+  public  double kI = consts.shooterkI;
+  public  double kP = consts.shooterkP;
 
   public static PowerDistributionPanel pdp = new PowerDistributionPanel();
   private static int CurrentCounter = 0;
