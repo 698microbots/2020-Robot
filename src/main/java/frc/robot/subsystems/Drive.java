@@ -45,7 +45,7 @@ public class Drive extends SubsystemBase {
     resetEncoders();
     
     //create odometry
-    m_odometry = new DifferentialDriveOdometry(new Rotation2d(), new Pose2d(consts.InitialX, consts.InitialY, new Rotation2d());
+    m_odometry = new DifferentialDriveOdometry(new Rotation2d(), new Pose2d(consts.InitialX, consts.InitialY, new Rotation2d()));
   }
 
   // Set Right Speeds on Drive Train
@@ -65,7 +65,7 @@ public class Drive extends SubsystemBase {
     if(speed1<-1) speed1 =-1;
     if(speed1>1) speed1=1;
 
-    SmartDashboard.putNumber("ROLL: ", navx.getRoll());
+    SmartDashboard.putNumber("Roll: ", navx.getRoll());
     if(navx.getRoll() <= -10){
       BackLeft.set(TalonFXControlMode.PercentOutput,-0.15);
       FrontLeft.set(TalonFXControlMode.PercentOutput,-0.15);
@@ -122,7 +122,13 @@ public class Drive extends SubsystemBase {
   }
 
   // Retrieve Pose Estimation from odometry
-  public Pose2d getPosition(){
+  public Pose2d getPosePosition(){
     return m_pose;
+  }
+
+  // Retrieve Position of frontright motor
+  // TODO: Double check these calcs are correct
+  public double getPosition(){
+    return FrontRight.getSelectedSensorPosition(0)*64.0/4096.0;
   }
 }
