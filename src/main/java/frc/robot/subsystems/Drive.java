@@ -10,8 +10,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.kinematics;
-import edu.wpi.first.wpilibj.geometry;
+import edu.wpi.first.wpilibj.kinematics.*;
+import edu.wpi.first.wpilibj.geometry.*;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -32,7 +32,7 @@ public class Drive extends SubsystemBase {
 	
   // Create Differential Drive Odometry Object and pose
   DifferentialDriveOdometry m_odometry;
-  Pose2d m_pose = new Pose2d(consts.InitalX, consts.InitialY, new Rotation2d());
+  Pose2d m_pose = new Pose2d(consts.InitialX, consts.InitialY, new Rotation2d());
 
   public Drive()   {
     // Config Encoders
@@ -45,7 +45,7 @@ public class Drive extends SubsystemBase {
     resetEncoders();
     
     //create odometry
-    m_odometry = new DifferentialDriveOdometry(new Rotation2d(), new Pose2d(consts.InitalX, consts.InitialY, new Rotation2d());
+    m_odometry = new DifferentialDriveOdometry(new Rotation2d(), new Pose2d(consts.InitialX, consts.InitialY, new Rotation2d());
   }
 
   // Set Right Speeds on Drive Train
