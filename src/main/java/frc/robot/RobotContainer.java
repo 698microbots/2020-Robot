@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Turret.AutoAim;
 import frc.robot.commands.Turret.TurretJoyStick;
+import frc.robot.commands.Wheel.PositionControl;
+import frc.robot.commands.Wheel.RotationControl;
 import frc.robot.commands.Drive.*;
 import frc.robot.commands.Intake.countBalls;
 
@@ -82,6 +84,8 @@ public class RobotContainer {
     driver2ButtonA.whenPressed(new shoot());
     driver2ButtonX.whenPressed(new ShooterIdle());
     driver2ButtonB.whenPressed(new AutoAim());
+    driver2LBumper.whenPressed(new RotationControl());
+    driver2RBumper.whenPressed(new PositionControl());
   }
 
 

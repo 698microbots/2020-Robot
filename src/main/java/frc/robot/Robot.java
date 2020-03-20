@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.SPI;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.Wof;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 
@@ -58,15 +59,13 @@ public class Robot extends TimedRobot {
   public static Drive drive = new Drive();
   public static Turret turret = new Turret();
   public static Intake intake = new Intake();
+  public static Wof wheel = new Wof();
 
   // Create Limelight
   public static NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
   public static NetworkTableEntry ledMode = limelight.getEntry("ledMode");
 
   public static AHRS navx = new AHRS(SPI.Port.kMXP);
-
-  // Var for fms
-    String gameData;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -155,34 +154,11 @@ public class Robot extends TimedRobot {
     shooter.getVelocity();
     turret.getPosition();
     turret.getVelocity();
-
-    // Read from FMS for WOF
-    gameData = DriverStation.getInstance().getGameSpecificMessage();
-    if(gameData.length() > 0){
-      switch(gameData.charAt(0)){
-          case 'B' :
-          //blue code
-          SmartDashboard.putString("wheel color", "Blue");
-          break;
-          case 'R' :
-          //red code
-          SmartDashboard.putString("wheel color", "Red");
-          break;
-          case 'Y' :
-          //yellow code
-          SmartDashboard.putString("wheel color", "Yellow");
-          break;
-          case 'G' :
-          //green code
-          SmartDashboard.putString("wheel color", "Green");
-          break;
-      }
     }
 
     // TODO: Needs to be put into separate file
     // Testing Purposes
     // SmartDashboard.putNumber("Roll: ", navx.getRoll());
-  }
 
   @Override
   public void testInit() {

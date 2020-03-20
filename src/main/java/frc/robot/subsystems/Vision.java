@@ -87,7 +87,7 @@ public class Vision extends SubsystemBase {
     }
 
     // Read colors on WOF
-    public void readColor() {
+    public String readColor() {
         if(!isCamera){
             // Initialize PixyCam if no camera present
             state = wof.init(0);
@@ -118,12 +118,16 @@ public class Vision extends SubsystemBase {
             SmartDashboard.putNumber("Y Coordinate: ", yCoord);
             SmartDashboard.putString("Color: ", colors[signature]);
             SmartDashboard.putString("Data: ", data);
+
+            return colors[signature];
         }
         else {
             SmartDashboard.putBoolean("Present: ", false);
             // Check to see how many targets are present
             SmartDashboard.putNumber("Size: ", blocks.size());
         }
+
+        return "";
     }
     
     // Calls Photoe sensor to count number of balls intaked

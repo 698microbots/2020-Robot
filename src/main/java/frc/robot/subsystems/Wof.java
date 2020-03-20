@@ -7,11 +7,14 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Wof extends SubsystemBase {
   public static VictorSP wof = new VictorSP(0);
+  // Var for fms
+  String gameData;
   /**
    * Creates a new Wof.
    */
@@ -20,6 +23,24 @@ public class Wof extends SubsystemBase {
   }
   public void setSpeed(double speed) {
     wof.set(speed);
+  }
+
+  public String readFMS(){
+    // Read from FMS for WOF
+    gameData = DriverStation.getInstance().getGameSpecificMessage();
+    if(gameData.length() > 0){
+      switch(gameData.charAt(0)){
+          case 'B' :
+            return "Blue";
+          case 'R' :
+            return "Red";
+          case 'Y' :
+            return "Yellow";
+          case 'G' :
+            return "Green";
+      }
+    }
+    return "";
   }
 
   @Override
