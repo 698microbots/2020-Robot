@@ -10,59 +10,41 @@ package frc.robot.commands.Turret;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.robot.subsystems.Turret;
-public class AutoAim extends CommandBase {
-  // updated var is used to only call limelight target once
-  boolean updated = false;
-  double x;
 
+public class TurretStabilizer extends CommandBase {
   // Create NavX
   public static AHRS navx;
-  double angle;
 
-  // For Turret Stabilization
-  public static double setPoint;
+  // Placeholder for angle
+  private double angle;
+
   /**
-   * Creates a new AutoAim.
+   * Creates a new TurretStabilizer.
    */
-  public AutoAim() {
+  public TurretStabilizer() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.turret);
-    addRequirements(Robot.vision);
-
-    // FOR TESTING PURPOSES: Turret Setpoint acts like a Limelight
-    //SmartDashboard.putNumber("TurretSetpoint", 10);
-    Robot.turret.Turret.setSelectedSensorPosition(0);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    updated = false;
-    Robot.ledMode.setNumber(0);
-    
     // Set port
     navx = new AHRS(SPI.Port.kMXP);
   }
-
+    
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() 
-  {
-    //double x = SmartDashboard.getNumber("TurretSetpoint", 10);
-    //x += Robot.turret.GetPosition();
-    if(updated == false){
-      x = -Robot.vision.GetX();
-      angle = navx.getAngle()>=360 ? navx.getAngle() % 360:navx.getAngle();
-      setPoint = x + angle;
-      updated = true;
-    }
-    SmartDashboard.putNumber("X Limelight", x);
-    Robot.turret.autorotate(x);
+  public void execute() {
+    // Ensures the range is within 0, 360
+    angle = navx.getAngle()>=360 ? navx.getAngle() % 360:navx.getAngle();
+
+    // For Testing Purposes
+    if(angle >= 90) angle = 0;
+
+    Robot.turret.rotate(AutoAim.setPoint - angle);
   }
 
   // Called once the command ends or is interrupted.
@@ -73,11 +55,6 @@ public class AutoAim extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Robot.turret.getVelocity() <= 0.005)
-    {
-      Robot.ledMode.setNumber(1);
-      return true;
-    }
-    else return false;
+    return false;
   }
 }
