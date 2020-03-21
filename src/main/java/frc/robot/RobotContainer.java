@@ -106,17 +106,19 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    //create constraints
     var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
         new SimpleMotorFeedforward(consts.ksVolts, consts.kvVoltSecondsPerMeter, consts.kaVoltSecondsSquaredPerMeter),
         consts.kDriveKinematics, 10);
 
+    //creat config for trajectory
     TrajectoryConfig config = new TrajectoryConfig(consts.kMaxSpeedMetersPerSecond,
         consts.kMaxAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(consts.kDriveKinematics)
             // Apply the voltage constraint
             .addConstraint(autoVoltageConstraint);
-
+    //creat trajectory
     Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction
       new Pose2d(0, 0, new Rotation2d(0)),
@@ -130,22 +132,22 @@ public class RobotContainer {
       // Pass config
       config
     );
-
-            RamseteCommand ramseteCommand = new RamseteCommand(
-              exampleTrajectory,
-              drive::getPosePosition,
-              new RamseteController(consts.kRamseteB, consts.kRamseteZeta),
-              new SimpleMotorFeedforward(consts.ksVolts,
-                                         consts.kvVoltSecondsPerMeter,
-                                         consts.kaVoltSecondsSquaredPerMeter),
-              consts.kDriveKinematics,
-              drive::getWheelSpeeds,
-              new PIDController(consts.kPDriveVel, 0, 0),
-              new PIDController(consts.kPDriveVel, 0, 0),
-              // RamseteCommand passes volts to the callback
-              drive::tankDriveVolts,
-              drive
-          );
+    //create commmand to follow trajectory
+     RamseteCommand ramseteCommand = new RamseteCommand(
+        exampleTrajectory,
+        drive::getPosePosition,
+        new RamseteController(consts.kRamseteB, consts.kRamseteZeta),
+        new SimpleMotorFeedforward(consts.ksVolts,
+                                   consts.kvVoltSecondsPerMeter,
+                                   consts.kaVoltSecondsSquaredPerMeter),
+        consts.kDriveKinematics,
+        drive::getWheelSpeeds,
+        new PIDController(consts.kPDriveVel, 0, 0),
+        new PIDController(consts.kPDriveVel, 0, 0),
+        // RamseteCommand passes volts to the callback
+        drive::tankDriveVolts,
+        drive
+        );
     return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0) , Robot.drive);
   }
 }

@@ -27,11 +27,6 @@ import com.kauailabs.navx.frc.AHRS;
 public class Drive extends SubsystemBase {
   // Create variables
   private static Constants consts = new Constants();
-  // public static TalonFX FrontRight = new TalonFX(consts.FrontRight);
-  // public static TalonFX FrontLeft = new TalonFX(consts.FrontLeft);
-  // public static TalonFX BackRight = new TalonFX(consts.BackRight);
-  // public static TalonFX BackLeft = new TalonFX(consts.BackLeft);
-  
   //DifferentialDrive
   public static WPI_TalonFX FrontRight = new WPI_TalonFX(consts.FrontRight);
   public static WPI_TalonFX FrontLeft = new WPI_TalonFX(consts.FrontLeft);
@@ -62,6 +57,7 @@ public class Drive extends SubsystemBase {
     BackRight.setInverted(InvertType.FollowMaster);
     BackLeft.setInverted(InvertType.FollowMaster);
     _diffDrive.setRightSideInverted(false);
+
     //we must reset encoders before instantiating the odometry
     resetEncoders();
     
@@ -78,6 +74,7 @@ public class Drive extends SubsystemBase {
     FrontRight.set(TalonFXControlMode.PercentOutput,speed);
   }
 
+  //drive using voltages instead of percent output
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     FrontLeft.setVoltage(leftVolts);
     FrontRight.setVoltage(-rightVolts);
@@ -142,7 +139,7 @@ public class Drive extends SubsystemBase {
   public Pose2d getPosePosition(){
     return m_pose;
   }
-
+  //wheels speeeds from encouders
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(((2 * Math.PI * 2.5)  / 60) * (FrontLeft.getSelectedSensorVelocity() * 600 / 2048), FrontRight.getSelectedSensorVelocity());
   }

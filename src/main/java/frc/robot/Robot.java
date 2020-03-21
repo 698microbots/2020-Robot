@@ -115,7 +115,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Autonomous: ", true);
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      // auto.schedule();
+      m_autonomousCommand.schedule();
     }
   }
 

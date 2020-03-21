@@ -50,13 +50,14 @@ public final class Constants {
     public double InitialX = 0;
     public double InitialY = 0;
 
+    //Trajectory constants
     public int kMaxSpeedMetersPerSecond = 5;
-    public int kMaxAccelerationMetersPerSecondSquared = 1;
+    public int kMaxAccelerationMetersPerSecondSquared = 3;
     public double ksVolts = 0.0;
     public double kvVoltSecondsPerMeter = 0.0;
     public double kaVoltSecondsSquaredPerMeter = 0.0;
-    public DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(27);
-    public double kRamseteB = 0.0;
-    public double kRamseteZeta = 0.0;
+    public DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(.6858);
+    public double kRamseteB = 2;
+    public double kRamseteZeta = 0.7;
     public double kPDriveVel = 0.0;
 }
