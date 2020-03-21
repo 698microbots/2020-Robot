@@ -44,6 +44,7 @@ public class RobotContainer {
 
   private final AutoCommandGroup m_autoCommand = new AutoCommandGroup();
   public Constants consts = new Constants();
+  public Drive drive = new Drive();
 
   public int XBOX_R_XAXIS = 4;
   public int XBOX_R_YAXIS = 5;
@@ -132,19 +133,19 @@ public class RobotContainer {
 
             RamseteCommand ramseteCommand = new RamseteCommand(
               exampleTrajectory,
-              Robot.drive::getPosePosition,
+              drive::getPosePosition,
               new RamseteController(consts.kRamseteB, consts.kRamseteZeta),
               new SimpleMotorFeedforward(consts.ksVolts,
                                          consts.kvVoltSecondsPerMeter,
                                          consts.kaVoltSecondsSquaredPerMeter),
               consts.kDriveKinematics,
-              Robot.drive::getWheelSpeeds,
+              drive::getWheelSpeeds,
               new PIDController(consts.kPDriveVel, 0, 0),
               new PIDController(consts.kPDriveVel, 0, 0),
               // RamseteCommand passes volts to the callback
-              Robot.drive::tankDriveVolts,
-              Robot.drive
+              drive::tankDriveVolts,
+              drive
           );
-    return ramseteCommand.andThen(() -> Drive.tankDriveVolts(0, 0) , Robot.drive);
+    return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0) , Robot.drive);
   }
 }

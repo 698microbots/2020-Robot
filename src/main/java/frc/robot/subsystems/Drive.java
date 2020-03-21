@@ -78,7 +78,7 @@ public class Drive extends SubsystemBase {
     FrontRight.set(TalonFXControlMode.PercentOutput,speed);
   }
 
-  public static void tankDriveVolts(double leftVolts, double rightVolts) {
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
     FrontLeft.setVoltage(leftVolts);
     FrontRight.setVoltage(-rightVolts);
     _diffDrive.feed();
@@ -142,6 +142,7 @@ public class Drive extends SubsystemBase {
   public Pose2d getPosePosition(){
     return m_pose;
   }
+
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(((2 * Math.PI * 2.5)  / 60) * (FrontLeft.getSelectedSensorVelocity() * 600 / 2048), FrontRight.getSelectedSensorVelocity());
   }
