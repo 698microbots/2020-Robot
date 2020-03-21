@@ -57,7 +57,9 @@ public final class Constants {
     public double kvVoltSecondsPerMeter = 0.0;
     public double kaVoltSecondsSquaredPerMeter = 0.0;
     public DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(.6858);
+    //TODO tune values
     public double kRamseteB = 2;
     public double kRamseteZeta = 0.7;
+    
     public double kPDriveVel = 0.0;
 }

@@ -140,8 +140,9 @@ public class Drive extends SubsystemBase {
     return m_pose;
   }
   //wheels speeeds from encouders
+  //TODO add gear box ratio
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(((2 * Math.PI * 2.5)  / 60) * (FrontLeft.getSelectedSensorVelocity() * 600 / 2048), FrontRight.getSelectedSensorVelocity());
+    return new DifferentialDriveWheelSpeeds(((2 * Math.PI * 2.5)  / 60) * (FrontLeft.getSelectedSensorVelocity() * 600 / 2048), ((2 * Math.PI * 2.5)  / 60) * (FrontRight.getSelectedSensorVelocity() * 600 / 2048));
   }
 
   // Retrieve Position of frontright motor
