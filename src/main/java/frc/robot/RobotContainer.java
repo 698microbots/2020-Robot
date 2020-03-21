@@ -7,14 +7,28 @@
 
 package frc.robot;
 
+import java.util.List;
+
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Turret.AutoAim;
 import frc.robot.commands.Turret.TurretJoyStick;
+import frc.robot.subsystems.Drive;
 import frc.robot.commands.Drive.*;
 import frc.robot.commands.Intake.countBalls;
 
@@ -29,6 +43,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final AutoCommandGroup m_autoCommand = new AutoCommandGroup();
+  public Constants consts = new Constants();
 
   public int XBOX_R_XAXIS = 4;
   public int XBOX_R_YAXIS = 5;
@@ -78,12 +93,11 @@ public class RobotContainer {
     driver1ButtonY.whileHeld(new index());
     driver1ButtonX.whenPressed(new countBalls());
 
-    // driver 2 
+    // driver 2
     driver2ButtonA.whenPressed(new shoot());
     driver2ButtonX.whenPressed(new ShooterIdle());
     driver2ButtonB.whenPressed(new AutoAim());
   }
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -91,7 +105,46 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
+        new SimpleMotorFeedforward(consts.ksVolts, consts.kvVoltSecondsPerMeter, consts.kaVoltSecondsSquaredPerMeter),
+        consts.kDriveKinematics, 10);
+
+    TrajectoryConfig config = new TrajectoryConfig(consts.kMaxSpeedMetersPerSecond,
+        consts.kMaxAccelerationMetersPerSecondSquared)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(consts.kDriveKinematics)
+            // Apply the voltage constraint
+            .addConstraint(autoVoltageConstraint);
+
+    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+      // Start at the origin facing the +X direction
+      new Pose2d(0, 0, new Rotation2d(0)),
+      // Pass through these two interior waypoints, making an 's' curve path
+      List.of(
+          new Translation2d(1, 1),
+          new Translation2d(2, -1)
+        ),
+      // End 3 meters straight ahead of where we started, facing forward
+      new Pose2d(3, 0, new Rotation2d(0)),
+      // Pass config
+      config
+    );
+
+            RamseteCommand ramseteCommand = new RamseteCommand(
+              exampleTrajectory,
+              Robot.drive::getPosePosition,
+              new RamseteController(consts.kRamseteB, consts.kRamseteZeta),
+              new SimpleMotorFeedforward(consts.ksVolts,
+                                         consts.kvVoltSecondsPerMeter,
+                                         consts.kaVoltSecondsSquaredPerMeter),
+              consts.kDriveKinematics,
+              Robot.drive::getWheelSpeeds,
+              new PIDController(consts.kPDriveVel, 0, 0),
+              new PIDController(consts.kPDriveVel, 0, 0),
+              // RamseteCommand passes volts to the callback
+              Robot.drive::tankDriveVolts,
+              Robot.drive
+          );
+    return ramseteCommand.andThen(() -> Drive.tankDriveVolts(0, 0) , Robot.drive);
   }
 }

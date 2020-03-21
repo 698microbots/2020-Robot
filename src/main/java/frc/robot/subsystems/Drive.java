@@ -7,7 +7,9 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.kinematics.*;
@@ -15,17 +17,28 @@ import edu.wpi.first.wpilibj.geometry.*;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 public class Drive extends SubsystemBase {
   // Create variables
   private static Constants consts = new Constants();
-  public static TalonFX FrontRight = new TalonFX(consts.FrontRight);
-  public static TalonFX FrontLeft = new TalonFX(consts.FrontLeft);
-  public static TalonFX BackRight = new TalonFX(consts.BackRight);
-  public static TalonFX BackLeft = new TalonFX(consts.BackLeft);
+  // public static TalonFX FrontRight = new TalonFX(consts.FrontRight);
+  // public static TalonFX FrontLeft = new TalonFX(consts.FrontLeft);
+  // public static TalonFX BackRight = new TalonFX(consts.BackRight);
+  // public static TalonFX BackLeft = new TalonFX(consts.BackLeft);
+  
+  //DifferentialDrive
+  public static WPI_TalonFX FrontRight = new WPI_TalonFX(consts.FrontRight);
+  public static WPI_TalonFX FrontLeft = new WPI_TalonFX(consts.FrontLeft);
+  public static WPI_TalonFX BackRight = new WPI_TalonFX(consts.BackRight);
+  public static WPI_TalonFX BackLeft = new WPI_TalonFX(consts.BackLeft);
+  public static DifferentialDrive _diffDrive = new DifferentialDrive(FrontLeft, FrontRight);
+
 
   // Create NavX
   public static AHRS navx = new AHRS(SPI.Port.kMXP);
@@ -40,7 +53,15 @@ public class Drive extends SubsystemBase {
     FrontLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     BackRight.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     BackLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-    
+
+    //config DifferentialDrive
+    BackRight.follow(FrontRight);
+    BackLeft.follow(FrontLeft);
+    FrontRight.setInverted(TalonFXInvertType.Clockwise); 
+    FrontLeft.setInverted(TalonFXInvertType.CounterClockwise);
+    BackRight.setInverted(InvertType.FollowMaster);
+    BackLeft.setInverted(InvertType.FollowMaster);
+    _diffDrive.setRightSideInverted(false);
     //we must reset encoders before instantiating the odometry
     resetEncoders();
     
@@ -57,6 +78,11 @@ public class Drive extends SubsystemBase {
     FrontRight.set(TalonFXControlMode.PercentOutput,speed);
   }
 
+  public static void tankDriveVolts(double leftVolts, double rightVolts) {
+    FrontLeft.setVoltage(leftVolts);
+    FrontRight.setVoltage(-rightVolts);
+    _diffDrive.feed();
+  }
   // Set Speeds on Drive Train (Tank Drive)
   public void setSpeed(double speed, double speed1) {
     // Ensures speed and speed1 are within range [-1,1]
@@ -67,22 +93,13 @@ public class Drive extends SubsystemBase {
 
     SmartDashboard.putNumber("Roll: ", navx.getRoll());
     if(navx.getRoll() <= -10){
-      BackLeft.set(TalonFXControlMode.PercentOutput,-0.15);
-      FrontLeft.set(TalonFXControlMode.PercentOutput,-0.15);
-      BackRight.set(TalonFXControlMode.PercentOutput,0.15);
-		  FrontRight.set(TalonFXControlMode.PercentOutput,0.15);
+      _diffDrive.tankDrive(-0.15, 0.15);
     }
     else if(navx.getRoll() >= 10){
-      BackLeft.set(TalonFXControlMode.PercentOutput,0.15);
-      FrontLeft.set(TalonFXControlMode.PercentOutput,0.15);
-      BackRight.set(TalonFXControlMode.PercentOutput,-0.15);
-		  FrontRight.set(TalonFXControlMode.PercentOutput,-0.15);
+      _diffDrive.tankDrive(0.15, -0.15);
     }
     else{
-      BackLeft.set(TalonFXControlMode.PercentOutput,speed);
-      FrontLeft.set(TalonFXControlMode.PercentOutput,speed);
-      BackRight.set(TalonFXControlMode.PercentOutput,speed1);
-		  FrontRight.set(TalonFXControlMode.PercentOutput,speed1);
+      _diffDrive.tankDrive(speed, speed1);
     }
   }
 
@@ -124,6 +141,9 @@ public class Drive extends SubsystemBase {
   // Retrieve Pose Estimation from odometry
   public Pose2d getPosePosition(){
     return m_pose;
+  }
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(((2 * Math.PI * 2.5)  / 60) * (FrontLeft.getSelectedSensorVelocity() * 600 / 2048), FrontRight.getSelectedSensorVelocity());
   }
 
   // Retrieve Position of frontright motor
