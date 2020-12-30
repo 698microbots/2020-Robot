@@ -49,5 +49,5 @@ public final class Constants {
     public double InitialY = 0;
     
     //New cool constant
-    public double cool_constant = 4.2;
+    public double coolConstant = 4.2;
 }
