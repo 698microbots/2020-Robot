@@ -49,5 +49,5 @@ public final class Constants {
     public double InitialY = 0;
 
     //Cool Constant
-    public double KrishCoolConstant = 0;
+    public double KrishCoolConstant = 1;
 }
