@@ -47,4 +47,7 @@ public final class Constants {
     //Initial Pose
     public double InitialX = 0;
     public double InitialY = 0;
+    
+    //New cool constant
+    public double cool_constant = 4.2;
 }
